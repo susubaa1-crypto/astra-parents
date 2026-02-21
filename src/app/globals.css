@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@200;400;700&family=Inter:wght@300;400;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Nanum Myeongjo", "Noto Serif KR", serif;
+  --font-sans: "Inter", sans-serif;
+}
+
+:root {
+  --background: #f8f7f4;
+  --foreground: #3a3a3a;
+  --paper-grain: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+}
+
+body {
+  background-color: var(--background);
+  background-image: var(--paper-grain);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.8;
+  letter-spacing: -0.01em;
+}
+
+@layer base {
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif);
+    @apply tracking-tight font-extrabold;
+  }
+}
+
+/* Elegant Art-book Border Styles */
+.double-border {
+  border: 1px solid #3a3a3a;
+  position: relative;
+}
+
+.double-border::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px solid #3a3a3a;
+  pointer-events: none;
+}
+
+.thin-sketch-border {
+  border: 0.5px solid #3a3a3a;
+  border-radius: 2px;
+}
+
+/* Subtle Art-book Textures */
+.gentle-shadow {
+  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+}
+
+/* Soft Fade-in Animations */
+.fade-in-section {
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom Selection for Analog Feel */
+::selection {
+  background: #f0ede4;
+  color: #3a3a3a;
+}
