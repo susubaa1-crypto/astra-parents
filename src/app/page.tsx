@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Countdown } from "@/components/Countdown";
 import { MissionIcon } from "@/components/MissionIcon";
 
@@ -29,8 +30,14 @@ export default function LandingPage() {
         </section>
 
         {/* Mission Icon Link */}
-        <section className="py-8">
+        <section className="py-8 text-center space-y-8">
           <MissionIcon />
+          <Link
+            href="/manifesto"
+            className="block text-[10px] font-serif uppercase tracking-[0.4em] text-slate-400 hover:text-[#3a3a3a] transition-colors"
+          >
+            view the transformation report →
+          </Link>
         </section>
 
         {/* Countdown Section */}
