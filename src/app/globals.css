@@ -1,23 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Serif+KR:wght@200;400;700&family=Inter:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Pretendard:wght@300;400;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Nanum Myeongjo", "Noto Serif KR", serif;
-  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair Display", serif;
+  --font-sans: "Pretendard", "Inter", sans-serif;
+
+  --color-paper-cream: #F9F8F6;
+  --color-paper-white: #FFFFFF;
+  --color-ink-charcoal: #2D2C2A;
+  --color-ink-gray: #7E7D7A;
+  --color-ink-light: #E1DFD9;
+  --color-sage: #9BADA3;
+  --color-rose: #D4B8B1;
+
+  --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
-  --background: #f8f7f4;
-  --foreground: #3a3a3a;
-  --paper-grain: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  --background: var(--color-paper-cream);
+  --foreground: var(--color-ink-charcoal);
 }
 
 body {
   background-color: var(--background);
-  background-image: var(--paper-grain);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   line-height: 1.8;
   letter-spacing: -0.01em;
 }
@@ -26,15 +35,47 @@ body {
 
   h1,
   h2,
-  h3 {
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-serif);
-    @apply tracking-tight font-extrabold;
+    color: var(--color-ink-charcoal);
+    font-weight: 400;
+    /* 미니멀리즘을 위해 볼드 자제 */
+  }
+
+  p {
+    font-family: var(--font-sans);
+    color: var(--color-ink-gray);
+    font-weight: 300;
+  }
+
+  ::selection {
+    background: var(--color-sage);
+    color: #fff;
   }
 }
 
-/* Elegant Art-book Border Styles */
+/* =========================================
+   Art-book Utilities (Design System)
+   ========================================= */
+
+/* 1. Hairline / Double Lines */
+.border-ink-light {
+  border-color: var(--color-ink-light);
+}
+
+.hairline-border {
+  border: 1px solid var(--color-ink-light);
+}
+
+.hairline-bottom {
+  border-bottom: 1px solid var(--color-ink-light);
+}
+
 .double-border {
-  border: 1px solid #3a3a3a;
+  border: 1px solid var(--color-ink-charcoal);
   position: relative;
 }
 
@@ -45,29 +86,36 @@ body {
   left: 3px;
   right: 3px;
   bottom: 3px;
-  border: 1px solid #3a3a3a;
+  border: 0.5px solid var(--color-ink-charcoal);
   pointer-events: none;
+  opacity: 0.7;
 }
 
-.thin-sketch-border {
-  border: 0.5px solid #3a3a3a;
-  border-radius: 2px;
+/* 2. Remove standard shadows, keep structural shadow only if necessary */
+.no-shadow {
+  box-shadow: none !important;
 }
 
-/* Subtle Art-book Textures */
-.gentle-shadow {
-  box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.05);
+/* 3. Smooth Transitions & Motions */
+.transition-smooth {
+  transition: all 0.5s var(--ease-expo);
 }
 
-/* Soft Fade-in Animations */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-ink-light);
+}
+
+/* Fade-in Entrance */
 .fade-in-section {
-  animation: fadeIn 1.2s ease-out forwards;
+  animation: fadeIn 1s var(--ease-expo) forwards;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
 
   to {
@@ -76,8 +124,19 @@ body {
   }
 }
 
-/* Custom Selection for Analog Feel */
-::selection {
-  background: #f0ede4;
-  color: #3a3a3a;
+/* Soft Fade-in Animations */
+.fade-in-section {
+  animation: fadeIn 1.2s var(--ease-out-expo) forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

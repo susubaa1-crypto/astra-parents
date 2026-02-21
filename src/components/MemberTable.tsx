@@ -12,51 +12,55 @@ interface MemberTableProps {
 
 export function MemberTable({ members, files }: MemberTableProps) {
     return (
-        <div className="w-full overflow-x-auto px-4 md:px-0">
-            <table className="w-full border-collapse">
+        <div className="w-full overflow-x-auto px-4 md:px-0 scrollbar-hide flex flex-col items-center">
+            <table className="w-full max-w-5xl border-collapse">
                 <thead>
-                    <tr className="border-b-2 border-[#3a3a3a]">
-                        <th className="px-6 py-6 text-left text-sm font-bold text-slate-800 font-serif uppercase tracking-widest">
+                    <tr className="border-b border-ink-charcoal">
+                        <th className="px-6 py-6 text-left text-[12px] font-semibold text-ink-charcoal font-sans uppercase tracking-[0.25em]">
                             참가자 이름
                         </th>
                         {files.map((file) => (
-                            <th key={file} className="px-6 py-6 text-center text-sm font-bold text-slate-800 font-serif uppercase tracking-widest min-w-[140px]">
+                            <th key={file} className="px-6 py-6 text-center text-[11px] font-light text-ink-gray font-sans uppercase tracking-[0.1em] min-w-[120px]">
                                 {file.split('_').pop()?.replace('.xlsx', '') || file}
                             </th>
                         ))}
-                        <th className="px-6 py-6 text-center text-sm font-bold text-slate-800 font-serif uppercase tracking-widest">
+                        <th className="px-6 py-6 text-center text-[12px] font-semibold text-ink-charcoal font-sans uppercase tracking-[0.25em]">
                             참여도
                         </th>
                     </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100">
+                <tbody className="divide-y divide-ink-light">
                     {members.map((member, idx) => (
                         <motion.tr
                             key={member.name}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: idx * 0.02, duration: 0.5 }}
-                            className="hover:bg-slate-50/50 transition-colors group"
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ delay: idx * 0.05, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                            className="hover:bg-paper-white transition-colors duration-500 group"
                         >
                             <td className="px-6 py-6 whitespace-nowrap">
                                 <Link
                                     href={`/member/${encodeURIComponent(member.name)}`}
-                                    className="text-sm font-medium text-slate-700 hover:text-slate-900 hover:underline decoration-slate-300 underline-offset-4 transition-colors"
+                                    className="text-[14px] font-sans font-medium text-ink-charcoal hover:text-ink-charcoal transition-colors relative inline-block after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-[1px] after:bottom-0 after:left-0 after:bg-ink-charcoal after:origin-bottom-right after:transition-transform after:duration-500 hover:after:scale-x-100 hover:after:origin-bottom-left"
                                 >
                                     {member.name}
                                 </Link>
                             </td>
                             {files.map((file) => (
                                 <td key={file} className="px-6 py-6 whitespace-nowrap text-center">
-                                    <div className={cn(
-                                        "inline-block w-2.5 h-2.5 rounded-full",
-                                        member.submissions[file] ? "bg-slate-800" : "bg-slate-100 border border-slate-200"
-                                    )} />
+                                    <div className="flex justify-center">
+                                        <div className={cn(
+                                            "w-2.5 h-2.5 rounded-full transition-all duration-500",
+                                            member.submissions[file]
+                                                ? "bg-ink-charcoal scale-100"
+                                                : "bg-paper-cream border border-ink-light scale-90 opacity-60"
+                                        )} />
+                                    </div>
                                 </td>
                             ))}
                             <td className="px-6 py-6 whitespace-nowrap text-center">
-                                <span className="text-sm font-medium text-slate-500 font-serif italic">
+                                <span className="text-[16px] text-ink-gray font-serif italic tracking-tight group-hover:text-ink-charcoal transition-colors duration-500">
                                     {Math.round(member.rate)}%
                                 </span>
                             </td>
