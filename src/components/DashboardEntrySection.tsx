@@ -9,8 +9,8 @@ export function DashboardEntrySection() {
         <section className="py-32 md:py-48 px-4 relative flex flex-col items-center justify-center min-h-[80vh] bg-paper-cream overflow-hidden">
             {/* Background abstract shapes */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl h-full pointer-events-none">
-                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-rose/10 rounded-full blur-[80px]" />
-                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-sage/10 rounded-full blur-[100px]" />
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[var(--color-bonfire-orange)] opacity-5 rounded-full blur-[80px]" />
+                <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-[var(--color-bonfire-orange)] opacity-10 rounded-full blur-[100px]" />
             </div>
 
             <motion.div
@@ -22,9 +22,9 @@ export function DashboardEntrySection() {
             >
                 <div className="space-y-6">
                     <motion.div
-                        animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8] }}
+                        animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8], rotate: [-2, 2, -2] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-20 h-20 mx-auto flex items-center justify-center rounded-full bg-paper-white shadow-sm border border-rose/20 text-rose"
+                        className="w-20 h-20 mx-auto flex items-center justify-center drawing-border-sm bg-paper-white shadow-sm text-[#FF6B35]"
                     >
                         <Flame className="w-8 h-8" strokeWidth={1.5} />
                     </motion.div>
@@ -38,8 +38,8 @@ export function DashboardEntrySection() {
                 </div>
 
                 <div className="space-y-8">
-                    <Link href="/dashboard" className="group relative inline-flex items-center justify-center px-12 py-5 bg-ink-charcoal text-paper-cream overflow-hidden transition-all hover:shadow-lg">
-                        <div className="absolute inset-0 bg-ink-charcoal/90 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                    <Link href="/dashboard" className="group relative inline-flex items-center justify-center px-12 py-5 bg-ink-charcoal text-paper-cream overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 drawing-border">
+                        <div className="absolute inset-0 bg-[#FF6B35] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                         <span className="relative z-10 text-[12px] font-sans uppercase tracking-[0.3em] font-medium transition-colors group-hover:text-white">
                             캠프장 입장하기
                         </span>

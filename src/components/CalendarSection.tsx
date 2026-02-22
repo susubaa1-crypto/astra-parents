@@ -17,7 +17,7 @@ export function CalendarSection() {
                     className="flex-1 space-y-12"
                 >
                     <div className="space-y-4">
-                        <span className="text-[12px] font-sans uppercase tracking-[0.4em] text-sage">The Miracle Evidence</span>
+                        <span className="text-[12px] font-sans uppercase tracking-[0.4em] text-[var(--color-bonfire-orange)] font-medium">The Miracle Evidence</span>
                         <h2 className="text-3xl md:text-[44px] font-serif text-ink-charcoal leading-[1.35] tracking-tight">
                             1억의 빚을 이겨낸 힘,<br />
                             <span className="italic block mt-2 font-light text-ink-charcoal/80">단 한 줄의 감사일기</span>
@@ -36,9 +36,9 @@ export function CalendarSection() {
                     </div>
 
                     <div className="pt-4">
-                        <button className="group relative inline-flex items-center gap-4 px-8 py-5 border border-ink-light bg-paper-white transition-smooth hover:border-ink-charcoal cursor-not-allowed">
-                            <BookOpen className="w-5 h-5 text-ink-charcoal/50 group-hover:text-ink-charcoal transition-colors" />
-                            <span className="text-[11px] font-sans uppercase tracking-[0.2em] font-medium text-ink-charcoal">2026 캘린더 보기 (준비중)</span>
+                        <button className="group relative inline-flex items-center gap-4 px-8 py-5 transition-smooth cursor-not-allowed drawing-border hover:-translate-y-1">
+                            <BookOpen className="w-5 h-5 text-[var(--color-bonfire-orange)] transition-colors" />
+                            <span className="text-[11px] font-sans uppercase tracking-[0.2em] font-medium text-ink-charcoal group-hover:text-[var(--color-bonfire-orange)] transition-colors">2026 캘린더 보기 (준비중)</span>
                         </button>
                     </div>
                 </motion.div>
@@ -52,9 +52,9 @@ export function CalendarSection() {
                     className="flex-1 relative w-full aspect-square max-w-lg mx-auto"
                 >
                     {/* Decorative background circle */}
-                    <div className="absolute inset-0 bg-sage/5 rounded-full blur-[80px]" />
+                    <div className="absolute inset-0 bg-[var(--color-bonfire-orange)] opacity-5 rounded-full blur-[80px]" />
 
-                    <div className="relative z-10 w-full h-full bg-paper-white p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] border border-paper-cream/50 flex flex-col justify-between transform rotate-2 hover:rotate-0 transition-transform duration-700 ease-out">
+                    <div className="relative z-10 w-full h-full bg-paper-white p-12 shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] drawing-border flex flex-col justify-between transform rotate-2 hover:rotate-0 transition-transform duration-700 ease-out">
                         <div className="space-y-6 text-center">
                             <p className="text-[12px] font-sans uppercase tracking-[0.3em] text-ink-charcoal/40 font-semibold">2026 KIKIMOM Calendar</p>
                             <h3 className="text-3xl font-serif text-ink-charcoal italic leading-snug break-keep">

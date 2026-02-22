@@ -12,6 +12,7 @@
   --color-ink-light: #E1DFD9;
   --color-sage: #9BADA3;
   --color-rose: #D4B8B1;
+  --color-bonfire-orange: #f25c05;
 
   --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -52,7 +53,7 @@ body {
   }
 
   ::selection {
-    background: var(--color-sage);
+    background: var(--color-bonfire-orange);
     color: #fff;
   }
 }
@@ -139,4 +140,42 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* =========================================
+   Drawing Aesthetic Utilities
+   ========================================= */
+
+/* Hand-drawn style borders */
+.drawing-border {
+  border: 1px solid var(--color-ink-charcoal);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+  background-color: var(--color-paper-white);
+}
+
+.drawing-border-sm {
+  border: 1px solid var(--color-ink-charcoal);
+  border-radius: 25px 5px 25px 5px / 5px 25px 5px 25px;
+}
+
+.drawing-border-lg {
+  border: 1.5px solid var(--color-ink-charcoal);
+  border-radius: 355px 25px 325px 25px / 25px 325px 25px 355px;
+}
+
+/* Wavy underline for links */
+.wavy-underline {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-bonfire-orange);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+/* Bonfire gradient for fire icons */
+.bonfire-text-gradient {
+  background: linear-gradient(135deg, #ff8c42 0%, #f25c05 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

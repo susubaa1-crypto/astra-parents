@@ -53,9 +53,9 @@ export function HeroSection() {
                 transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
                 className="relative z-10 flex flex-col items-center space-y-8 mt-20"
             >
-                <span className="text-[12px] font-sans uppercase tracking-[0.3em] text-ink-gray">Daily Positive Affirmation</span>
+                <span className="text-[12px] font-sans uppercase tracking-[0.3em] text-[var(--color-bonfire-orange)] font-medium">Daily Positive Affirmation</span>
 
-                <div className="space-y-6">
+                <div className="space-y-6 flex flex-col items-center">
                     <AnimatePresence mode="wait">
                         {mounted && (
                             <motion.h1
@@ -74,24 +74,25 @@ export function HeroSection() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 1, delay: 1 }}
-                        className="text-[14px] font-sans font-light text-ink-gray/80 italic mt-8"
+                        className="text-[14px] font-sans font-light text-ink-gray/80 italic mt-8 relative inline-block group"
                     >
                         - 긍정언어캘린더 오늘의 문장 -
+                        <span className="absolute bottom-[-4px] left-0 w-full h-[1px] bg-[var(--color-bonfire-orange)] opacity-0 group-hover:opacity-50 transition-opacity"></span>
                     </motion.p>
                 </div>
 
                 <motion.div
                     initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 60 }}
+                    animate={{ opacity: 1, height: 75 }}
                     transition={{ duration: 1, delay: 1.5 }}
-                    className="w-[1px] bg-ink-charcoal/30 mt-16"
+                    className="w-[1.5px] bg-gradient-to-b from-[var(--color-bonfire-orange)] to-transparent mt-16 opacity-70"
                 />
 
                 <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1, delay: 1.8 }}
-                    className="text-[13px] font-sans font-light text-ink-charcoal/70 tracking-widest uppercase mt-4"
+                    className="text-[13px] font-sans font-light text-[var(--color-bonfire-orange)] tracking-widest uppercase mt-4 italic"
                 >
                     따뜻한 모닥불 곁으로 오세요
                 </motion.p>

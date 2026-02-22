@@ -38,6 +38,17 @@ export default function MagazineDetail({ params }: { params: Promise<{ id: strin
                     <div className="w-16 h-[1px] bg-slate-200 mx-auto" />
                 </div>
 
+                {/* Cover Image */}
+                {magazine.thumbnail && (
+                    <div className="relative w-full max-w-2xl mx-auto animate-fade-in-up">
+                        <img
+                            src={magazine.thumbnail}
+                            alt={`${magazine.title} Cover`}
+                            className="w-full h-auto object-cover rounded-[2px]"
+                        />
+                    </div>
+                )}
+
                 {/* Content Sections */}
                 <div className="space-y-12">
                     {magazine.content.sections.map((section, idx) => (

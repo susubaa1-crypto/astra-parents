@@ -13,7 +13,14 @@ export function MagazineCard({ magazine }: MagazineCardProps) {
             <div className="relative overflow-hidden aspect-[3/4.2] bg-paper-white p-8 transition-smooth hairline-border no-shadow hover:-translate-y-2 hover:border-ink-charcoal flex flex-col justify-between">
 
                 {/* Decorative Inner Border that slowly draws in on hover */}
-                <div className="absolute inset-3 border border-ink-light pointer-events-none transition-all duration-700 group-hover:inset-4 group-hover:border-ink-charcoal/30" />
+                <div className="absolute inset-3 border border-ink-light pointer-events-none transition-all duration-700 group-hover:inset-4 group-hover:border-ink-charcoal/30 z-10" />
+
+                {/* Image Background (shows on hover) */}
+                {magazine.thumbnail && (
+                    <div className="absolute inset-0 z-0 opacity-0 group-hover:opacity-15 transition-opacity duration-1000 ease-out pointer-events-none">
+                        <img src={magazine.thumbnail} alt="" className="w-full h-full object-cover grayscale mix-blend-multiply" />
+                    </div>
+                )}
 
                 {/* Content Overlay */}
                 <div className="relative z-10 h-full flex flex-col justify-between">
