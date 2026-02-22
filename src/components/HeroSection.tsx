@@ -11,10 +11,11 @@ export function HeroSection() {
 
     useEffect(() => {
         setMounted(true);
-        // 클라이언트의 로컬 시간 기준 가져오기
-        const today = new Date();
-        const month = today.getMonth() + 1;
-        const day = today.getDate();
+        // 클라이언트 로컬 시간이 아닌, 한국 시간(KST, Asia/Seoul)을 강제 기준으로 가져오기
+        const kstDateString = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" });
+        const kstDate = new Date(kstDateString);
+        const month = kstDate.getMonth() + 1;
+        const day = kstDate.getDate();
 
         // 날짜에 맞는 긍정 확언 데이터 찾기 (동일한 월, 일 매칭)
         const matchingData = calendarData.find(d => d.month === month && d.day === day);
