@@ -37,10 +37,10 @@ export function HeroSection() {
                 className="absolute inset-0 z-0 pointer-events-none"
             >
                 <Image
-                    src="/images/bw-bonfire.png"
-                    alt="Black and white bonfire"
+                    src="/images/candle-hero.png"
+                    alt="Glowing elegant candle in the dark"
                     fill
-                    className="object-cover object-center opacity-20 mix-blend-multiply"
+                    className="object-cover object-center opacity-30 mix-blend-multiply"
                     priority
                 />
                 {/* Gradient mask to fade out the image at the bottom into the cream background */}

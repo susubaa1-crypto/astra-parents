@@ -1,12 +1,31 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { magazines } from "@/data/magazines";
 import { MagazineCard } from "@/components/MagazineCard";
 
 export function MagazineSection() {
     return (
         <section className="relative py-32 md:py-48 px-4 bg-ink-charcoal text-paper-cream overflow-hidden">
+            {/* Cinematic Background Image */}
+            <motion.div
+                initial={{ opacity: 0, scale: 1.05 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 3, ease: "easeOut" }}
+                className="absolute inset-0 z-0 pointer-events-none"
+            >
+                <Image
+                    src="/images/vintage-diary.png"
+                    alt="Vintage diary background"
+                    fill
+                    className="object-cover object-center opacity-40 mix-blend-overlay grayscale"
+                />
+                {/* Dark gradients to ensure text remains highly readable */}
+                <div className="absolute inset-0 bg-gradient-to-t from-ink-charcoal via-ink-charcoal/80 to-ink-charcoal/40" />
+            </motion.div>
+
             {/* Dark Ambient Lighting Effect */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-sage/5 blur-[100px] pointer-events-none" />
 
