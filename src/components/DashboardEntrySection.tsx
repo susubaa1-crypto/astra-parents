@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Flame } from "lucide-react";
+import { BonfireLogo } from "@/components/BonfireLogo";
 
 export function DashboardEntrySection() {
     return (
@@ -26,7 +26,7 @@ export function DashboardEntrySection() {
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                         className="w-20 h-20 mx-auto flex items-center justify-center drawing-border-sm bg-paper-white shadow-sm text-[#FF6B35]"
                     >
-                        <Flame className="w-8 h-8" strokeWidth={1.5} />
+                        <BonfireLogo className="w-10 h-10" />
                     </motion.div>
                     <h2 className="text-4xl md:text-5xl lg:text-[64px] font-serif text-ink-charcoal leading-[1.3] tracking-tight">
                         Community Bonfire
