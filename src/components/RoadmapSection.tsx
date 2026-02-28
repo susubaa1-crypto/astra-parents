@@ -6,7 +6,7 @@ import { Lock, Map, Sparkles } from "lucide-react";
 const steps = [
     {
         num: "1.0",
-        title: "긍정언어캠프",
+        title: "Positive Village",
         desc: "지금 시행중인 첫걸음",
         status: "active",
         icon: <Sparkles className="w-5 h-5 text-[var(--color-bonfire-orange)]" />,
@@ -29,8 +29,8 @@ const steps = [
 
 export function RoadmapSection() {
     return (
-        <section className="py-24 md:py-32 px-4 relative">
-            <div className="max-w-[1000px] mx-auto space-y-20">
+        <section className="py-16 md:py-32 px-4 relative">
+            <div className="max-w-[1000px] mx-auto space-y-12 md:space-y-20">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -38,18 +38,18 @@ export function RoadmapSection() {
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                     className="text-center space-y-6"
                 >
-                    <span className="text-[12px] font-sans uppercase tracking-[0.4em] text-[var(--color-bonfire-orange)] font-medium">Vision Roadmap</span>
+                    <span className="text-[12px] font-sans uppercase tracking-[0.4em] text-[var(--color-bonfire-orange)] font-medium">The Ascension Model</span>
                     <h2 className="text-3xl md:text-5xl font-serif text-ink-charcoal leading-[1.3] tracking-tight">
-                        나와 우리 가족의<br />
-                        <span className="italic block mt-2 text-ink-charcoal/80">성장 지도</span>
+                        나를 살린 언어는 부부를 바꾸고,<br />
+                        <span className="italic block mt-2 text-ink-charcoal/80">마침내 우리 가족의 유산이 됩니다.</span>
                     </h2>
                 </motion.div>
 
                 <div className="relative">
                     {/* Vertical connecting line */}
-                    <div className="absolute top-10 left-[2.5rem] md:left-1/2 bottom-10 w-[1px] bg-ink-light -translate-x-1/2" />
+                    <div className="absolute top-10 left-[2rem] md:left-1/2 bottom-10 w-[1px] bg-ink-light -translate-x-1/2" />
 
-                    <div className="space-y-16">
+                    <div className="space-y-12 md:space-y-16">
                         {steps.map((step, idx) => (
                             <motion.div
                                 key={idx}
@@ -61,18 +61,18 @@ export function RoadmapSection() {
                                     } ${step.status === "locked" ? "opacity-60" : "opacity-100"}`}
                             >
                                 {/* Visual Node */}
-                                <div className="absolute left-[2.5rem] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-12 h-12 rounded-full bg-paper-cream drawing-border-sm z-10 transition-transform duration-500 hover:scale-110">
+                                <div className="absolute left-[2rem] md:left-1/2 -translate-x-1/2 flex items-center justify-center w-10 h-10 md:w-12 md:h-12 rounded-full bg-paper-cream drawing-border-sm z-10 transition-transform duration-500 hover:scale-110">
                                     {step.icon}
                                 </div>
 
                                 {/* Content Box */}
-                                <div className="w-full md:w-1/2 pl-20 md:pl-0 flex flex-col justify-center">
-                                    <div className={`p-8 hairline-border bg-paper-white transition-smooth ${step.status === 'active' ? 'border-sage shadow-sm' : ''} ${idx % 2 === 0 ? "md:mr-16" : "md:ml-16"}`}>
-                                        <div className="flex items-baseline gap-3 mb-4">
-                                            <span className="font-serif text-2xl italic text-ink-charcoal opacity-50">{step.num}</span>
-                                            <h3 className="font-serif text-2xl text-ink-charcoal">{step.title}</h3>
+                                <div className="w-full md:w-1/2 pl-16 md:pl-0 flex flex-col justify-center">
+                                    <div className={`p-6 md:p-8 hairline-border bg-paper-white transition-smooth ${step.status === 'active' ? 'border-sage shadow-sm' : ''} ${idx % 2 === 0 ? "md:mr-16" : "md:ml-16"}`}>
+                                        <div className="flex items-baseline gap-2 md:gap-3 mb-3 md:mb-4">
+                                            <span className="font-serif text-xl md:text-2xl italic text-ink-charcoal opacity-50">{step.num}</span>
+                                            <h3 className="font-serif text-xl md:text-2xl text-ink-charcoal">{step.title}</h3>
                                         </div>
-                                        <p className="font-sans text-[14px] font-light text-ink-gray leading-relaxed">
+                                        <p className="font-sans text-[13px] md:text-[14px] font-light text-ink-gray leading-[1.7] md:leading-relaxed break-keep">
                                             {step.desc}
                                         </p>
                                         {step.status === "active" && (

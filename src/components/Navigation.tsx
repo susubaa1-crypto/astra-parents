@@ -8,8 +8,9 @@ export function Navigation() {
     const pathname = usePathname();
 
     const navItems = [
-        { name: "Report", href: "/" },
+        { name: "Home", href: "/" },
         { name: "About", href: "/about" },
+        { name: "결핍일기", href: "/magazine" },
         { name: "Dashboard", href: "/dashboard" },
     ];
 

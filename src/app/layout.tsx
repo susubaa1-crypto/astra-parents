@@ -3,7 +3,7 @@ import "./globals.css";
 import { Navigation } from "@/components/Navigation";
 
 export const metadata: Metadata = {
-  title: "긍정 언어 캠프 | 변화 보고서",
+  title: "Positive Village | 변화 보고서",
   description: "지치고 미안했던 육아가 설레고 평온한 일상으로 바뀌는 마법 같은 순간들",
 };
 

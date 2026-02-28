@@ -72,7 +72,7 @@ export default function MagazineDetail({ params }: { params: Promise<{ id: strin
                 {/* Footer */}
                 <div className="pt-24 border-t border-slate-100 text-center">
                     <p className="text-[10px] font-serif uppercase tracking-[0.4em] text-slate-300">
-                        Positive Language Habit Challenge &copy; 2026
+                        Positive Village Habit Challenge &copy; 2026
                     </p>
                 </div>
             </div>

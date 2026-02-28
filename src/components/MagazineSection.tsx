@@ -7,7 +7,7 @@ import { MagazineCard } from "@/components/MagazineCard";
 
 export function MagazineSection() {
     return (
-        <section className="relative py-32 md:py-48 px-4 bg-ink-charcoal text-paper-cream overflow-hidden">
+        <section className="relative py-20 md:py-48 px-4 bg-ink-charcoal text-paper-cream overflow-hidden">
             {/* Cinematic Background Image */}
             <motion.div
                 initial={{ opacity: 0, scale: 1.05 }}
@@ -17,10 +17,10 @@ export function MagazineSection() {
                 className="absolute inset-0 z-0 pointer-events-none"
             >
                 <Image
-                    src="/images/vintage-diary.png"
-                    alt="Vintage diary background"
+                    src="/images/real/IMG_3310.JPG"
+                    alt="Positive Village Magazine"
                     fill
-                    className="object-cover object-center opacity-40 mix-blend-overlay grayscale"
+                    className="object-cover object-center opacity-30 mix-blend-overlay grayscale"
                 />
                 {/* Dark gradients to ensure text remains highly readable */}
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-charcoal via-ink-charcoal/80 to-ink-charcoal/40" />
@@ -29,7 +29,7 @@ export function MagazineSection() {
             {/* Dark Ambient Lighting Effect */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl h-64 bg-sage/5 blur-[100px] pointer-events-none" />
 
-            <div className="max-w-[1200px] mx-auto relative z-10 space-y-24">
+            <div className="max-w-[1200px] mx-auto relative z-10 space-y-16 md:space-y-24">
                 {/* Section Header */}
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
@@ -38,17 +38,18 @@ export function MagazineSection() {
                     transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
                     className="text-center space-y-8"
                 >
-                    <div className="flex justify-center mb-6">
-                        <span className="w-[1px] h-16 bg-paper-cream/20" />
+                    <div className="flex justify-center mb-4 md:mb-6">
+                        <span className="w-[1px] h-12 md:h-16 bg-paper-cream/20" />
                     </div>
-                    <span className="text-[12px] font-sans uppercase tracking-[0.5em] text-paper-cream/50">Monthly Deficit</span>
-                    <h2 className="text-4xl md:text-5xl font-serif text-paper-cream leading-[1.3] tracking-tight">
-                        완벽하지 않아도 괜찮은<br />
-                        <span className="italic block mt-4 text-paper-cream/70 font-light">결핍 매거진</span>
+                    <span className="text-[12px] font-sans uppercase tracking-[0.5em] text-[var(--color-bonfire-orange)] font-medium">Social Proof</span>
+                    <h2 className="text-3xl md:text-5xl font-serif text-paper-cream leading-[1.3] tracking-tight">
+                        나만 변한 게 아닙니다<br />
+                        <span className="italic block mt-2 md:mt-4 text-paper-cream/70 font-light">기적의 증거들</span>
                     </h2>
                     <p className="text-[14px] md:text-[15px] font-sans font-light text-paper-cream/60 leading-relaxed max-w-xl mx-auto pt-6">
-                        아무도 보지 않았으면 하는 비밀 일기장 속 이야기들.<br />
-                        당신의 부족함과 나의 결핍이 만나, 깊은 연대를 피워냅니다.
+                        "매일 밤 자책하며 울었어요."<br />
+                        "이제 아이가 실수해도 웃으며 넘길 여유가 생겼어요."<br />
+                        <span className="text-[12px] italic mt-2 block">(Positive Village 참여자들의 이야기)</span>
                     </p>
                 </motion.div>
 

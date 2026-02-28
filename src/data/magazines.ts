@@ -21,7 +21,7 @@ export const magazines: Magazine[] = [
         month: "JANUARY 2026",
         title: "애정 결핍인 내가 엄마가 되어도 될까",
         description: "내 안의 결핍을 마주하고, 아이에게 줄 수 있는 가장 큰 사랑을 발견하는 여정",
-        thumbnail: "/raw/jan-2026-thumb.jpg",
+        thumbnail: "/images/real/IMG_5969.JPG",
         icon: "Heart",
         content: {
             title: "애정 결핍인 내가 엄마가 되어도 될까",
