@@ -31,7 +31,7 @@ export function Navigation() {
     }, [lastScrollY]);
 
     const navItems = [
-        { name: "Home", href: "/" },
+        { name: "Kikimom", href: "/" },
         { name: "About", href: "/about" },
         { name: "결핍일기", href: "/magazine" },
         { name: "Dashboard", href: "/dashboard" },

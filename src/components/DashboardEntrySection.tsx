@@ -24,28 +24,28 @@ export function DashboardEntrySection() {
                     <motion.div
                         animate={{ scale: [1, 1.05, 1], opacity: [0.8, 1, 0.8], rotate: [-2, 2, -2] }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="w-20 h-20 mx-auto flex items-center justify-center drawing-border-sm bg-ink-charcoal border border-paper-cream/20 shadow-[0_0_30px_rgba(255,107,53,0.15)] text-[#FF6B35]"
+                        className="w-20 h-20 mx-auto flex items-center justify-center drawing-border-sm bg-ink-charcoal border border-paper-cream/20 shadow-[0_0_30px_rgba(242,92,5,0.15)] text-[var(--color-bonfire-orange)]"
                     >
                         <Flame className="w-8 h-8" strokeWidth={1.5} />
                     </motion.div>
                     <h2 className="text-[32px] md:text-5xl lg:text-[64px] font-serif text-paper-cream leading-[1.3] md:leading-[1.2] tracking-tight max-w-[280px] md:max-w-none mx-auto break-keep">
-                        당신의 자리를 비워두었습니다
+                        기적을 경험한 엄마들의 이야기
                     </h2>
                     <p className="text-[15px] md:text-[16px] font-sans font-light text-paper-cream/70 leading-[1.7] md:leading-relaxed pt-4 md:pt-2 break-keep px-4">
-                        오늘 밤, 아무도 당신을 평가하지 않는 곳에서<br className="hidden md:block" />
-                        따뜻한 온기를 나누세요.
+                        단 10분의 긍정 언어 연습이 어떻게 한 가정을 바꾸었는지,<br className="hidden md:block" />
+                        생생한 후기를 확인해보세요.
                     </p>
                 </div>
 
                 <div className="space-y-8">
                     <Link href="/dashboard" className="group relative inline-flex items-center justify-center px-12 py-5 bg-paper-cream text-ink-charcoal overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(255,107,53,0.3)] hover:-translate-y-1 drawing-border">
-                        <div className="absolute inset-0 bg-[#FF6B35] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                        <div className="absolute inset-0 bg-[var(--color-bonfire-orange)] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                         <span className="relative z-10 text-[12px] font-sans font-medium transition-colors group-hover:text-white flex items-center gap-2 tracking-[0.2em] font-semibold text-ink-charcoal group-hover:text-white">
-                            ⛺️ 지금 내 자리 맡으러 가기
+                            ✨ 엄마들의 진짜 리뷰 보러가기
                         </span>
                     </Link>
                     <p className="text-[12px] font-sans text-paper-cream/40 italic tracking-wider">
-                        매일 밤 과제 인증과 긍정언어 나누기
+                        4번의 챌린지, 실제 수강생들의 과제 데이터 기록
                     </p>
                 </div>
             </motion.div>
