@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Send, CheckCircle2, Camera, X } from 'lucide-react';
+import { Send, CheckCircle2, Camera, X, Clock } from 'lucide-react';
 import { participants } from '../data/participants';
 import { curriculumMissions } from '../data/curriculum';
 
@@ -17,12 +17,34 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // 가나다 순 참가자 정렬
+  const sortedParticipants = useMemo(() => {
+    return [...participants].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  }, []);
 
   // 현재 선택된 날짜(currentDay)에 맞는 미션 데이터 가져오기
   const currentMission = useMemo(() => {
     return curriculumMissions.find(m => m.day === currentDay);
   }, [currentDay]);
+
+  // 마감 시간 계산 로직 (시작일 4월 6일 기준, 다음날 오전 6시 마감 KST)
+  const isExpired = useMemo(() => {
+    if (!isClient) return false;
+    
+    const START_DATE = new Date('2026-04-06T00:00:00+09:00');
+    const deadline = new Date(START_DATE);
+    deadline.setDate(deadline.getDate() + currentDay); // Day 1이면 +1 해서 4월 7일
+    deadline.setHours(6, 0, 0, 0); // 06:00:00 KST
+    
+    return new Date() > deadline;
+  }, [currentDay, isClient]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -47,6 +69,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isExpired) return;
     if (!name || !content) return;
 
     setIsSubmitting(true);
@@ -81,7 +104,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
       if (res.ok) {
         setIsSuccess(true);
         setContent('');
-        removeImage(); // 이미지 초기화
+        removeImage(); 
         
         onMissionSubmit();
         
@@ -111,6 +134,14 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
           <CheckCircle2 size={56} className="mb-4 drop-shadow-[0_0_10px_var(--color-astra-glow)]" />
           <p className="font-serif text-lg tracking-wide">미션 인증 완료! 북극성이 하나 더 빛납니다 🌟</p>
         </div>
+      ) : isExpired ? (
+        <div className="flex flex-col items-center justify-center py-12 px-4 bg-black/20 rounded-xl border border-white/5 text-ink-gray">
+          <Clock size={40} className="mb-4 text-ink-gray/60" />
+          <p className="font-serif text-xl md:text-2xl text-astra-starlight mb-2 tracking-widest text-center">
+            과제 제출이 마감되었습니다
+          </p>
+          <p className="text-sm">매일 주어지는 소중한 약속, 내일 미션을 기대해 주세요.</p>
+        </div>
       ) : (
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
@@ -123,7 +154,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
               required
             >
               <option value="" disabled>이름을 선택해주세요</option>
-              {participants.map((p, idx) => (
+              {sortedParticipants.map((p, idx) => (
                 <option key={idx} value={p.name} className="bg-astra-navy text-astra-starlight">{p.name} ({p.phone.slice(-4)})</option>
               ))}
             </select>
@@ -135,7 +166,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
               id="content"
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="우리 집만의 문화를 만들기 위한 오늘의 시도를 적어주세요."
+              placeholder="무의식의 우주에 빛을 남기는 중..."
               className="px-4 py-4 bg-astra-navy/50 border border-white/10 rounded-xl focus:outline-none focus:border-astra-gold focus:ring-1 focus:ring-astra-gold min-h-[140px] resize-y text-astra-starlight placeholder:text-ink-gray"
               required
             />
