@@ -41,15 +41,17 @@ export function MagazineSection() {
                     <div className="flex justify-center mb-4 md:mb-6">
                         <span className="w-[1px] h-12 md:h-16 bg-paper-cream/20" />
                     </div>
-                    <span className="text-[12px] font-sans uppercase tracking-[0.5em] text-[var(--color-bonfire-orange)] font-medium">Social Proof</span>
-                    <h2 className="text-3xl md:text-5xl font-serif text-paper-cream leading-[1.3] tracking-tight">
-                        나만 변한 게 아닙니다<br />
-                        <span className="italic block mt-2 md:mt-4 text-paper-cream/70 font-light">기적의 증거들</span>
+                    <span className="text-[12px] font-sans uppercase tracking-[0.5em] text-astra-gold font-medium">Author's Note</span>
+                    <h2 className="text-3xl md:text-4xl font-serif text-astra-starlight leading-[1.3] tracking-widest font-light">
+                        완벽한 부모는 없어요.<br />
+                        <span className="block mt-4 md:mt-6 text-xl md:text-2xl text-ink-light">내 아이에게 꼭 맞는 부모가 되어줄 뿐.</span>
                     </h2>
-                    <p className="text-[14px] md:text-[15px] font-sans font-light text-paper-cream/60 leading-relaxed max-w-xl mx-auto pt-6">
-                        "매일 밤 자책하며 울었어요."<br />
-                        "이제 아이가 실수해도 웃으며 넘길 여유가 생겼어요."<br />
-                        <span className="text-[12px] italic mt-2 block">(Positive Village 참여자들의 이야기)</span>
+                    <p className="text-[15px] md:text-[17px] font-serif font-light text-ink-light/80 leading-[2.2] max-w-xl mx-auto pt-10 break-keep">
+                        저의 불안했던 시간들을 날것 그대로 적어뒀어요.<br /><br />
+                        내가 이겨낸 만큼 담았고,<br />
+                        상처가 치유된 만큼만 적었어요.<br /><br />
+                        더하지도 빼지도 않은 저의 결핍이 아물어가는 과정.<br />
+                        여러분들에게 좋은 영감을 주기를 바랍니다.
                     </p>
                 </motion.div>
 

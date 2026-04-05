@@ -1,25 +1,27 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;600&family=Pretendard:wght@300;400;600&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-serif: "Playfair Display", serif;
-  --font-sans: "Pretendard", "Inter", sans-serif;
+  --font-serif: "Noto Serif KR", var(--font-playfair), serif;
+  --font-sans: "Pretendard", var(--font-inter), sans-serif;
 
+  --color-astra-navy: #090B10;
+  --color-astra-blue: #131A2A;
+  --color-astra-starlight: #FDFBF7;
+  --color-astra-gold: #D9BB7B;
+  --color-astra-glow: #FCEAA9;
+  
   --color-paper-cream: #F9F8F6;
   --color-paper-white: #FFFFFF;
   --color-ink-charcoal: #2D2C2A;
   --color-ink-gray: #7E7D7A;
   --color-ink-light: #E1DFD9;
-  --color-sage: #9BADA3;
-  --color-rose: #D4B8B1;
-  --color-bonfire-orange: #f25c05;
 
   --ease-expo: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 :root {
-  --background: var(--color-paper-cream);
-  --foreground: var(--color-ink-charcoal);
+  --background: var(--color-astra-navy);
+  --foreground: var(--color-astra-starlight);
 }
 
 body {
@@ -41,22 +43,22 @@ body {
   h5,
   h6 {
     font-family: var(--font-serif);
-    color: var(--color-ink-charcoal);
+    color: var(--color-astra-starlight);
     font-weight: 400;
-    /* 미니멀리즘을 위해 볼드 자제 */
   }
 
   p {
     font-family: var(--font-sans);
-    color: var(--color-ink-gray);
+    color: var(--color-ink-light);
     font-weight: 300;
   }
 
   ::selection {
-    background: var(--color-bonfire-orange);
-    color: #fff;
+    background: var(--color-astra-gold);
+    color: var(--color-astra-navy);
   }
 }
+
 
 /* =========================================
    Art-book Utilities (Design System)
