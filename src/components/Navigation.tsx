@@ -32,10 +32,10 @@ export function Navigation() {
 
     const navItems = [
         { name: "ASTRA PARENTS", href: "/" },
-        { name: "About", href: "/about" },
+        { name: "JOURNEY", href: "/about" },
         { name: "결핍일기", href: "/magazine" },
-        { name: "Missions", href: "/missions" },
-        { name: "Dashboard", href: "/dashboard" },
+        { name: "MISSIONS", href: "/missions" },
+        { name: "REVIEW", href: "/dashboard" },
     ];
 
     return (
