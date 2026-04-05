@@ -5,9 +5,9 @@ import { Quote } from "lucide-react";
 
 export default function ReviewsPage() {
   return (
-    <main className="min-h-screen p-8 md:p-16 lg:p-24 max-w-7xl mx-auto space-y-24 md:space-y-32 bg-ink-charcoal text-paper-cream pt-36 selection:bg-[var(--color-bonfire-orange)] selection:text-white">
-      {/* Header Wadiz-style Copy */}
-      <header className="flex flex-col items-center text-center space-y-12 pb-20 border-b border-paper-cream/10 mx-auto max-w-4xl relative z-10">
+    <main className="min-h-screen p-8 md:p-16 lg:p-24 max-w-7xl mx-auto space-y-24 md:space-y-32 bg-astra-navy text-astra-starlight pt-36 selection:bg-astra-gold selection:text-astra-navy">
+      {/* Header Copy */}
+      <header className="flex flex-col items-center text-center space-y-12 pb-20 border-b border-white/10 mx-auto max-w-4xl relative z-10">
         <div className="space-y-10 w-full pt-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -15,12 +15,12 @@ export default function ReviewsPage() {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <span className="text-[13px] md:text-[15px] font-sans uppercase tracking-[0.2em] text-paper-cream/60 font-medium bg-paper-cream/5 px-6 py-2 rounded-full border border-paper-cream/10 inline-block">
+            <span className="text-[13px] md:text-[15px] font-sans uppercase tracking-[0.2em] text-ink-light font-medium bg-white/5 px-6 py-2 rounded-full border border-white/10 inline-block">
               21일 동안 어떤 변화가 생기는지 궁금하시죠?
             </span>
-            <h2 className="text-2xl md:text-[32px] text-paper-cream font-medium tracking-tight break-keep leading-[1.6]">
+            <h2 className="text-2xl md:text-[32px] text-astra-starlight font-light tracking-widest break-keep leading-[1.6]">
               지금까지 참여한 엄마들이 공통적으로 느낀 변화,<br />
-              <span className="text-[var(--color-bonfire-orange)] font-serif italic text-3xl md:text-5xl block mt-6 drop-shadow-sm">
+              <span className="text-astra-gold font-serif italic text-3xl md:text-5xl block mt-6 drop-shadow-[0_0_15px_rgba(217,187,123,0.3)]">
                 "엄마가 바뀌니, 아이도 바뀐다."
               </span>
             </h2>
@@ -32,7 +32,7 @@ export default function ReviewsPage() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="pt-10 space-y-12"
           >
-            <p className="text-[16px] md:text-[20px] font-serif text-paper-cream/80 font-light break-keep leading-[2.2]">
+            <p className="text-[16px] md:text-[20px] font-serif text-ink-light font-light break-keep leading-[2.2]">
               저 혼자 경험한 변화였다면<br />
               이렇게까지 오지 못 했을 거에요.<br /><br />
               
@@ -42,20 +42,17 @@ export default function ReviewsPage() {
             </p>
 
             <div className="py-4 space-y-4 relative">
-              <div className="absolute left-1/2 -top-6 -translate-x-1/2 w-[1px] h-12 bg-gradient-to-b from-transparent to-[var(--color-bonfire-orange)]/50" />
-              <p className="text-[18px] md:text-2xl font-serif text-paper-cream leading-[2.2] pt-8">
+              <div className="absolute left-1/2 -top-6 -translate-x-1/2 w-[1px] h-12 bg-gradient-to-b from-transparent to-astra-gold/50" />
+              <p className="text-[18px] md:text-2xl font-serif text-astra-starlight leading-[2.2] pt-8 font-light">
                 엄마인 나의 말이 바뀌니<br />
                 아이의 돌아오는 말이 달라지고<br /><br />
                 스트레스 받던 일상이<br />
-                <strong className="text-[var(--color-bonfire-orange)] font-normal">행복한 감정이 쌓이는 추억</strong>으로<br />
-                바뀌게 되었어요.
+                <strong className="text-astra-gold font-normal">행복한 감정이 쌓이는 추억</strong>으로<br />
+                바뀌게 되었어요.<br /><br />
+                <span className="text-[18px] md:text-2xl block mt-4 underline decoration-1 underline-offset-8 decoration-astra-gold/50 text-astra-gold italic">
+                  이제, 여러분들의 차례입니다.
+                </span>
               </p>
-            </div>
-
-            <div className="pt-12">
-              <h1 className="text-3xl md:text-[40px] text-paper-cream font-serif tracking-widest leading-[1.6] font-light italic">
-                이제, <strong className="text-[var(--color-bonfire-orange)] font-normal not-italic underline decoration-1 underline-offset-8">여러분들의 차례</strong>입니다.
-              </h1>
             </div>
           </motion.div>
         </div>
@@ -68,15 +65,15 @@ export default function ReviewsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1 }}
-            className="flex flex-col items-center justify-center p-8 md:p-12 lg:p-14 border border-[var(--color-bonfire-orange)]/40 bg-[var(--color-bonfire-orange)]/10 drawing-border space-y-4 relative overflow-hidden group w-full max-w-xl"
+            className="flex flex-col items-center justify-center p-8 md:p-12 lg:p-14 border border-astra-gold/30 bg-astra-gold/5 space-y-4 relative overflow-hidden group w-full max-w-xl shadow-[0_0_40px_rgba(217,187,123,0.1)] rounded-[2px]"
           >
-            <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-bonfire-orange)]/0 to-[var(--color-bonfire-orange)]/5 group-hover:to-[var(--color-bonfire-orange)]/10 transition-colors" />
-            <span className="text-[13px] text-[var(--color-bonfire-orange)] font-sans tracking-widest uppercase font-bold relative z-10">아이의 즉각적 협조 경험</span>
-            <div className="flex items-baseline gap-1 pt-2 relative z-10">
-              <span className="text-6xl md:text-[80px] font-serif text-[var(--color-bonfire-orange)] font-medium leading-none">85</span>
-              <span className="text-3xl font-serif text-[var(--color-bonfire-orange)]">%</span>
+            <div className="absolute inset-0 bg-gradient-to-b from-astra-gold/0 to-astra-gold/10 group-hover:to-astra-gold/20 transition-colors" />
+            <span className="text-[14px] text-astra-gold font-sans tracking-[0.3em] uppercase font-bold relative z-10">아이의 즉각적 협조 경험</span>
+            <div className="flex items-baseline gap-2 pt-2 relative z-10">
+              <span className="text-6xl md:text-[80px] font-serif text-astra-starlight font-light leading-none drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">85</span>
+              <span className="text-3xl font-serif text-astra-gold">%</span>
             </div>
-            <span className="text-[15px] text-[var(--color-bonfire-orange)]/70 font-light pt-3 relative z-10">실제 수강생 변화 체감률</span>
+            <span className="text-[15px] text-ink-light pt-3 relative z-10 tracking-widest font-light">실제 수강생 변화 체감률</span>
           </motion.div>
         </div>
       </section>
@@ -119,18 +116,18 @@ export default function ReviewsPage() {
             className="flex flex-col lg:flex-row-reverse gap-8 lg:gap-16 items-center"
           >
             {/* Real Review Content */}
-            <div className="flex-1 bg-paper-cream/5 border border-paper-cream/10 p-8 md:p-12 drawing-border transition-smooth hover:border-[var(--color-bonfire-orange)]/50 w-full relative z-10">
-              <div className="flex items-center gap-4 border-b border-paper-cream/10 pb-6 mb-8">
-                <div className="w-12 h-12 rounded-full bg-[var(--color-bonfire-orange)]/10 flex items-center justify-center text-[var(--color-bonfire-orange)] font-serif font-bold text-xl">
+            <div className="flex-1 bg-white/5 border border-white/10 p-8 md:p-12 transition-smooth hover:border-astra-gold/50 hover:shadow-[0_0_20px_rgba(217,187,123,0.15)] w-full relative z-10 rounded-[2px]">
+              <div className="flex items-center gap-4 border-b border-white/10 pb-6 mb-8">
+                <div className="w-12 h-12 rounded-full bg-astra-gold/10 flex items-center justify-center text-astra-gold font-serif font-light text-xl">
                   {item.author[0]}
                 </div>
                 <div>
-                  <h3 className="text-lg md:text-xl font-medium text-paper-cream">{item.author}</h3>
-                  <p className="text-[13px] text-paper-cream/50 mt-1">캠프 수강생 찐후기</p>
+                  <h3 className="text-lg md:text-xl font-light text-astra-starlight">{item.author}</h3>
+                  <p className="text-[13px] text-ink-light tracking-widest mt-1">캠프 수강생 찐후기</p>
                 </div>
               </div>
 
-              <div className="space-y-6 text-[15px] md:text-[17px] font-sans font-light text-paper-cream/80 break-keep leading-[2.2]">
+              <div className="space-y-6 text-[15px] md:text-[17px] font-serif font-light text-ink-light break-keep leading-[2.2]">
                 {item.content.split('\n\n').map((para, idx) => (
                   <p key={idx}>{para}</p>
                 ))}
@@ -139,8 +136,8 @@ export default function ReviewsPage() {
 
             {/* Testimonial Quote */}
             <div className="lg:w-2/5 w-full flex flex-col justify-center text-left px-4 pt-4 lg:pt-0">
-              <Quote className="w-12 h-12 text-[var(--color-bonfire-orange)]/30 mb-8" />
-              <p className="font-serif italic text-3xl md:text-4xl lg:text-[40px] text-[var(--color-bonfire-orange)] leading-[1.5] break-keep relative z-10 w-full pl-0 drop-shadow-sm font-medium">
+              <Quote className="w-12 h-12 text-astra-gold/30 mb-8" />
+              <p className="font-serif italic text-3xl md:text-4xl lg:text-[40px] text-astra-gold/90 leading-[1.6] break-keep relative z-10 w-full pl-0 font-light tracking-wide">
                 "{item.highlight}"
               </p>
             </div>
@@ -149,12 +146,12 @@ export default function ReviewsPage() {
       </section>
 
       {/* Footer Space */}
-      <footer className="pt-32 pb-20 text-center text-paper-cream/50 font-sans text-[11px] uppercase tracking-[0.4em] space-y-6 flex flex-col items-center">
-        <div className="w-16 h-[1px] bg-paper-cream/20 mb-10 relative">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-paper-cream/20 bg-ink-charcoal" />
+      <footer className="pt-32 pb-20 text-center text-ink-light font-sans text-[11px] uppercase tracking-[0.4em] space-y-6 flex flex-col items-center">
+        <div className="w-16 h-[1px] bg-white/20 mb-10 relative">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full border border-white/20 bg-astra-navy" />
         </div>
-        <p className="transition-colors hover:text-paper-cream">&copy; 2026 Positive Village.</p>
-        <p className="font-serif italic text-[13px] opacity-70 tracking-widest text-[var(--color-bonfire-orange)]">All these miracles started from a small change.</p>
+        <p className="transition-colors hover:text-astra-starlight">&copy; 2026 Positive Village.</p>
+        <p className="font-serif italic text-[13px] opacity-70 tracking-widest text-astra-gold">All these miracles started from a small change.</p>
       </footer>
     </main>
   );
