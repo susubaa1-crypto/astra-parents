@@ -52,7 +52,7 @@ export default function MissionsPage() {
           ASTRA PARENTS
         </h1>
         <p className="text-ink-light font-light text-[17px] md:text-xl tracking-wide max-w-2xl mx-auto leading-relaxed">
-          우리 아이들이 엄마가 없어도 세상 속에서 길을 잃지 않도록,<br className="hidden md:block"/>단단한 북극성을 세워가는 {currentDay}일차 여정 🌟
+          우리 아이들이 엄마가 없어도 세상 속에서 길을 잃지 않도록,<br />단단한 북극성을 세워가는 {currentDay}일차 여정 🌟
         </p>
       </header>
 
