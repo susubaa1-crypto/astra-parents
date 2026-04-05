@@ -91,7 +91,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
             className="mt-4 bg-astra-gold hover:bg-astra-glow disabled:opacity-50 text-astra-navy font-bold py-4 px-6 rounded-xl transition-all flex items-center justify-center gap-2 tracking-wide font-sans shadow-[0_0_15px_rgba(217,187,123,0.2)] hover:shadow-[0_0_25px_var(--color-astra-glow)] transform hover:-translate-y-1"
           >
             {isSubmitting ? '밤하늘에 새기는 중...' : (
-              <>인증하기 <Send size={18} /></>
+              <>긍정 무의식 저장하기 <Send size={18} /></>
             )}
           </button>
         </form>
