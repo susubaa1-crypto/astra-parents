@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Send, CheckCircle2, Camera, X, Clock } from 'lucide-react';
+import { Send, CheckCircle2, Camera, X, Clock, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
 import { participants } from '../data/participants';
 import { curriculumMissions } from '../data/curriculum';
 
@@ -18,6 +18,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isClient, setIsClient] = useState(false);
+  const [showDictionary, setShowDictionary] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -120,13 +121,59 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
 
   return (
     <div className="bg-astra-blue/40 backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_30px_rgba(0,0,0,0.3)] border border-white/5 mb-8 max-w-2xl mx-auto w-full">
-      <div className="mb-8 space-y-4">
+      <div className="mb-6 space-y-4">
         <h3 className="font-serif text-xl md:text-2xl text-astra-glow flex items-center gap-2 drop-shadow-sm">
           <span>✨</span> Day {currentDay} : {currentMission?.title || "미션 인증하기"}
         </h3>
         <p className="text-ink-light font-sans text-sm md:text-base leading-relaxed bg-astra-navy/50 p-5 rounded-xl border border-astra-gold/20 shadow-inner">
           {currentMission?.description || "오늘의 미션을 진행하고 느낀 점을 자유롭게 적어주세요."}
         </p>
+      </div>
+
+      <div className="mb-8">
+        <button 
+          type="button"
+          onClick={() => setShowDictionary(!showDictionary)}
+          className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
+            showDictionary 
+              ? 'bg-astra-navy/80 border-astra-gold/40 text-astra-gold shadow-[0_0_15px_rgba(217,187,123,0.1)]' 
+              : 'bg-astra-navy/40 border-white/10 text-astra-starlight hover:border-astra-gold/30 hover:bg-astra-navy/60'
+          }`}
+        >
+          <span className="font-sans font-medium flex items-center gap-2">
+            <BookOpen size={18} /> 감정 및 욕구 단어장 보며 작성하기
+          </span>
+          {showDictionary ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </button>
+        
+        {showDictionary && (
+          <div className="mt-3 p-5 md:p-6 bg-astra-navy/90 rounded-xl border border-astra-gold/20 space-y-7 text-sm animate-in fade-in slide-in-from-top-2 duration-300 shadow-inner">
+            <div>
+              <h4 className="text-astra-gold font-bold text-base mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                <span className="bg-astra-gold/20 px-2 py-0.5 rounded text-astra-gold text-xs">1</span> 감정 온도 (Feelings)
+              </h4>
+              <ul className="space-y-2.5 text-ink-light font-light leading-relaxed">
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">기쁨/안정 :</span> <span>편안한, 감사한, 뿌듯한, 신나는, 홀가분한, 포근한, 재미있는, 든든한</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">슬픔/우울 :</span> <span>속상한, 울적한, 외로운, 서운한, 허전한, 무기력한, 피곤한, 막막한</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">불안/긴장 :</span> <span>걱정되는, 긴장되는, 불안한, 혼란스러운, 당황한, 조급한</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">화/분노 :</span> <span>화가 나는, 짜증나는, 답답한, 억울한, 원망스러운, 미운</span></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-astra-gold font-bold text-base mb-3 border-b border-white/10 pb-2 flex items-center gap-2">
+                <span className="bg-astra-gold/20 px-2 py-0.5 rounded text-astra-gold text-xs">2</span> 마음 속 진짜 욕구 (Needs)
+              </h4>
+              <ul className="space-y-2.5 text-ink-light font-light leading-relaxed">
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">연결/사랑 :</span> <span>공감받고, 안아줬으면 하고, 소속되고 싶어</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">존중/인정 :</span> <span>인정받고, 내 의견을 존중받고 칭찬받고 싶어</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">자율/자유 :</span> <span>내 마음대로 선택하고, 간섭없이 혼자 해보고 싶어</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">휴식/평온 :</span> <span>가만히 쉬고, 조용히 혼자만의 시간이 필요해</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">재미/놀이 :</span> <span>신나고 재미있게 놀고, 새로운 걸 경험하고 싶어</span></li>
+                <li className="flex gap-2"><span className="font-medium text-astra-starlight shrink-0 w-20">성취/배움 :</span> <span>스스로 잘 해내고, 성취감을 느끼고 싶어</span></li>
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
       
       {isSuccess ? (
