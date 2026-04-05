@@ -6,7 +6,7 @@ import MissionFeed from '../../components/MissionFeed';
 import { Navigation } from '../../components/Navigation';
 import { Mission } from '../api/missions/route';
 import { cohorts } from '../../data/participants';
-import { Lock } from 'lucide-react';
+import { Lock, LogOut } from 'lucide-react';
 
 export default function MissionsPage() {
   const [currentDay, setCurrentDay] = useState<number>(1);
@@ -69,6 +69,12 @@ export default function MissionsPage() {
     }
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('astra_cohort');
+    setIsAuthenticated(false);
+    setPassword('');
+  };
+
   return (
     <div className="min-h-screen bg-astra-navy text-astra-starlight font-sans pb-20 relative overflow-hidden">
       {/* Background Starry Image */}
@@ -110,6 +116,15 @@ export default function MissionsPage() {
         </main>
       ) : (
         <>
+          <div className="absolute top-24 right-4 md:right-8 z-50">
+            <button 
+              onClick={handleLogout}
+              className="flex items-center gap-2 p-2 md:px-4 rounded-full bg-astra-navy/40 border border-white/10 text-ink-gray hover:text-astra-white hover:border-white/30 transition-colors text-[11px] md:text-xs font-sans tracking-widest backdrop-blur-md"
+            >
+              <LogOut size={14} /> <span className="hidden md:inline">로그아웃</span>
+            </button>
+          </div>
+          
           {/* Header */}
           <header className="relative z-10 pt-[30vh] md:pt-[40vh] pb-[15vh] px-6 text-center flex flex-col items-center justify-center">
             <h1 className="text-4xl md:text-6xl font-serif text-astra-glow mb-4 tracking-[0.3em] uppercase drop-shadow-[0_0_15px_rgba(217,187,123,0.5)]">
