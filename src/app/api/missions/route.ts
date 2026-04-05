@@ -17,6 +17,7 @@ export interface Mission {
   day: number;
   name: string;
   content: string;
+  imageUrl?: string;
   created_at: string;
 }
 
@@ -84,7 +85,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { day, name, content } = body;
+    const { day, name, content, imageUrl } = body;
     
     if (!day || !name || !content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
@@ -95,6 +96,7 @@ export async function POST(request: Request) {
       day: parseInt(day, 10),
       name,
       content,
+      imageUrl: imageUrl || undefined,
       created_at: new Date().toISOString(),
     };
     

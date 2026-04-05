@@ -58,6 +58,12 @@ export default function MissionFeed({ missions, isLoading }: MissionFeedProps) {
           <div className="text-ink-light whitespace-pre-wrap leading-relaxed font-light text-sm md:text-base">
             {mission.content}
           </div>
+          
+          {mission.imageUrl && (
+            <div className="mt-5 rounded-xl overflow-hidden border border-white/10 w-full max-w-sm drop-shadow-md">
+              <img src={mission.imageUrl} alt="Mission upload" className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+          )}
         </div>
       ))}
     </div>
