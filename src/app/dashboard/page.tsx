@@ -30,24 +30,31 @@ export default function ReviewsPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
-            className="pt-10 space-y-8"
+            className="pt-10 space-y-12"
           >
-            <p className="text-lg md:text-[22px] text-paper-cream/80 font-light break-keep leading-[1.8]">
-              제가 드리고 싶은 건<br />
-              <span className="line-through opacity-40">잠깐 써먹는 스킬이 아니에요.</span>
+            <p className="text-[16px] md:text-[20px] font-serif text-paper-cream/80 font-light break-keep leading-[2.2]">
+              저 혼자 경험한 변화였다면<br />
+              이렇게까지 오지 못 했을 거에요.<br /><br />
+              
+              3주의 긴 시간<br />
+              우리의 무의식은 조금씩 조금씩<br />
+              정화되는 걸 많은 분들이 함께 경험했어요.
             </p>
 
             <div className="py-4 space-y-4 relative">
               <div className="absolute left-1/2 -top-6 -translate-x-1/2 w-[1px] h-12 bg-gradient-to-b from-transparent to-[var(--color-bonfire-orange)]/50" />
-              <p className="text-xl md:text-3xl font-serif text-paper-cream leading-[1.6] pt-8">
-                우리집이 안전하고, 평온하고, 다정한<br />
-                천국 같은 집이 되는 <strong className="text-white underline decoration-[var(--color-bonfire-orange)] decoration-4 underline-offset-8">본질</strong>
+              <p className="text-[18px] md:text-2xl font-serif text-paper-cream leading-[2.2] pt-8">
+                엄마인 나의 말이 바뀌니<br />
+                아이의 돌아오는 말이 달라지고<br /><br />
+                스트레스 받던 일상이<br />
+                <strong className="text-[var(--color-bonfire-orange)] font-normal">행복한 감정이 쌓이는 추억</strong>으로<br />
+                바뀌게 되었어요.
               </p>
             </div>
 
-            <div className="pt-6">
-              <h1 className="text-6xl md:text-[90px] lg:text-[110px] text-[var(--color-bonfire-orange)] font-serif tracking-tight leading-[1] font-bold drop-shadow-md">
-                '소울 터치' <span className="text-3xl md:text-5xl text-paper-cream font-light align-baseline tracking-normal">입니다.</span>
+            <div className="pt-12">
+              <h1 className="text-3xl md:text-[40px] text-paper-cream font-serif tracking-widest leading-[1.6] font-light italic">
+                이제, <strong className="text-[var(--color-bonfire-orange)] font-normal not-italic underline decoration-1 underline-offset-8">여러분들의 차례</strong>입니다.
               </h1>
             </div>
           </motion.div>
