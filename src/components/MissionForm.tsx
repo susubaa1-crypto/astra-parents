@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Send, CheckCircle2 } from 'lucide-react';
 import { participants } from '../data/participants';
+import { curriculumMissions } from '../data/curriculum';
 
 interface MissionFormProps {
   currentDay: number;
@@ -14,6 +15,11 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
   const [content, setContent] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+
+  // 현재 선택된 날짜(currentDay)에 맞는 미션 데이터 가져오기
+  const currentMission = useMemo(() => {
+    return curriculumMissions.find(m => m.day === currentDay);
+  }, [currentDay]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,9 +52,14 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
 
   return (
     <div className="bg-astra-blue/40 backdrop-blur-md rounded-2xl p-6 shadow-[0_4px_30px_rgba(0,0,0,0.3)] border border-white/5 mb-8 max-w-2xl mx-auto w-full">
-      <h3 className="font-serif text-xl text-astra-glow mb-6 flex items-center gap-2">
-        <span>✨</span> 나의 Day {currentDay} 미션 인증하기
-      </h3>
+      <div className="mb-8 space-y-4">
+        <h3 className="font-serif text-xl md:text-2xl text-astra-glow flex items-center gap-2 drop-shadow-sm">
+          <span>✨</span> Day {currentDay} : {currentMission?.title || "미션 인증하기"}
+        </h3>
+        <p className="text-ink-light font-sans text-sm md:text-base leading-relaxed bg-astra-navy/50 p-5 rounded-xl border border-astra-gold/20 shadow-inner">
+          {currentMission?.description || "오늘의 미션을 진행하고 느낀 점을 자유롭게 적어주세요."}
+        </p>
+      </div>
       
       {isSuccess ? (
         <div className="flex flex-col items-center justify-center py-10 text-astra-gold animate-in fade-in zoom-in duration-500">
