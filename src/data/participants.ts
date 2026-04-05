@@ -233,3 +233,19 @@ export const participants = [
     "phone": "01048025336"
   }
 ];
+
+export interface Cohort {
+  id: number;
+  password: string;
+  title: string;
+  participants: { name: string; phone: string }[];
+}
+
+export const cohorts: Record<number, Cohort> = {
+  5: {
+    id: 5,
+    password: "kiki555",
+    title: "5기 긍정언어챌린지",
+    participants: participants
+  }
+};

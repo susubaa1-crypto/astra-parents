@@ -15,19 +15,21 @@ const redis = redisUrl && redisToken ? new Redis({
 export interface Mission {
   id: string;
   day: number;
+  cohort: number; // Added cohort field
   name: string;
   content: string;
   imageUrl?: string;
   created_at: string;
 }
 
-const dataFilePath = path.join(process.cwd(), 'src', 'data', 'missions.json');
+const getFilePath = (cohort: number) => path.join(process.cwd(), 'src', 'data', `missions_${cohort}.json`);
+const getRedisKey = (cohort: number) => `astra_missions_cohort_${cohort}`;
 
 // Helper to read missions
-const readMissions = async (): Promise<Mission[]> => {
+const readMissions = async (cohort: number): Promise<Mission[]> => {
   if (redis) {
     try {
-      const missions = await redis.get<Mission[]>('astra_missions');
+      const missions = await redis.get<Mission[]>(getRedisKey(cohort));
       return missions || [];
     } catch (error) {
       console.error('Error reading from Redis:', error);
@@ -37,8 +39,9 @@ const readMissions = async (): Promise<Mission[]> => {
 
   // Fallback to local file system for development without DB
   try {
-    if (fs.existsSync(dataFilePath)) {
-      const data = fs.readFileSync(dataFilePath, 'utf8');
+    const filePath = getFilePath(cohort);
+    if (fs.existsSync(filePath)) {
+      const data = fs.readFileSync(filePath, 'utf8');
       return JSON.parse(data);
     }
     return [];
@@ -49,10 +52,10 @@ const readMissions = async (): Promise<Mission[]> => {
 };
 
 // Helper to write missions
-const writeMissions = async (missions: Mission[]) => {
+const writeMissions = async (cohort: number, missions: Mission[]) => {
   if (redis) {
     try {
-      await redis.set('astra_missions', missions);
+      await redis.set(getRedisKey(cohort), missions);
       return;
     } catch (error) {
       console.error('Error writing to Redis:', error);
@@ -61,7 +64,8 @@ const writeMissions = async (missions: Mission[]) => {
 
   // Fallback to local file system
   try {
-    fs.writeFileSync(dataFilePath, JSON.stringify(missions, null, 2), 'utf8');
+    const filePath = getFilePath(cohort);
+    fs.writeFileSync(filePath, JSON.stringify(missions, null, 2), 'utf8');
   } catch (error) {
     console.error('Error writing local missions:', error);
   }
@@ -70,8 +74,10 @@ const writeMissions = async (missions: Mission[]) => {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const dayParam = searchParams.get('day');
+  const cohortParam = searchParams.get('cohort');
   
-  const missions = await readMissions();
+  const cohort = cohortParam ? parseInt(cohortParam, 10) : 5; // Default to 5
+  const missions = await readMissions(cohort);
   
   if (dayParam) {
     const day = parseInt(dayParam, 10);
@@ -85,24 +91,27 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { day, name, content, imageUrl } = body;
+    const { day, name, content, imageUrl, cohort } = body;
     
     if (!day || !name || !content) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
     
+    const missionCohort = cohort ? parseInt(cohort, 10) : 5;
+
     const newMission: Mission = {
       id: Date.now().toString() + Math.random().toString(36).substring(7),
       day: parseInt(day, 10),
+      cohort: missionCohort,
       name,
       content,
       imageUrl: imageUrl || undefined,
       created_at: new Date().toISOString(),
     };
     
-    const missions = await readMissions();
+    const missions = await readMissions(missionCohort);
     missions.push(newMission);
-    await writeMissions(missions);
+    await writeMissions(missionCohort, missions);
     
     return NextResponse.json(newMission, { status: 201 });
   } catch (error) {

@@ -2,15 +2,16 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Send, CheckCircle2, Camera, X, Clock, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
-import { participants } from '../data/participants';
+import { cohorts } from '../data/participants';
 import { curriculumMissions } from '../data/curriculum';
 
 interface MissionFormProps {
   currentDay: number;
+  cohortId: number;
   onMissionSubmit: () => void;
 }
 
-export default function MissionForm({ currentDay, onMissionSubmit }: MissionFormProps) {
+export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: MissionFormProps) {
   const [name, setName] = useState('');
   const [content, setContent] = useState('');
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -25,10 +26,11 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
     setIsClient(true);
   }, []);
 
-  // 가나다 순 참가자 정렬
+  // 가나다 순 참가자 정렬 (cohorts 데이터에서 가져오기)
   const sortedParticipants = useMemo(() => {
-    return [...participants].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
-  }, []);
+    const cohortParticipants = cohorts[cohortId]?.participants || [];
+    return [...cohortParticipants].sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+  }, [cohortId]);
 
   // 현재 선택된 날짜(currentDay)에 맞는 미션 데이터 가져오기
   const currentMission = useMemo(() => {
@@ -99,7 +101,7 @@ export default function MissionForm({ currentDay, onMissionSubmit }: MissionForm
       const res = await fetch('/api/missions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ day: currentDay, name, content, imageUrl: uploadedImageUrl })
+        body: JSON.stringify({ day: currentDay, name, content, imageUrl: uploadedImageUrl, cohort: cohortId })
       });
 
       if (res.ok) {
