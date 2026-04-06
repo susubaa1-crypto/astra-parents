@@ -3,6 +3,8 @@ import fs from 'fs';
 import path from 'path';
 import { Redis } from '@upstash/redis';
 
+export const dynamic = 'force-dynamic';
+
 // Vercel officially integrates with Upstash Redis for KV
 const redisUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
 const redisToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;

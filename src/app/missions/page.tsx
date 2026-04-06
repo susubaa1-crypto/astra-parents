@@ -30,7 +30,12 @@ export default function MissionsPage() {
   const fetchMissions = async (day: number, cohortId: number) => {
     setIsLoading(true);
     try {
-      const res = await fetch(`/api/missions?day=${day}&cohort=${cohortId}`);
+      const res = await fetch(`/api/missions?day=${day}&cohort=${cohortId}`, {
+        cache: 'no-store',
+        headers: {
+          'Pragma': 'no-cache'
+        }
+      });
       if (res.ok) {
         const data = await res.json();
         setMissions(data);
