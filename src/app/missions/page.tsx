@@ -6,12 +6,14 @@ import MissionFeed from '../../components/MissionFeed';
 import { Navigation } from '../../components/Navigation';
 import { Mission } from '../api/missions/route';
 import { cohorts } from '../../data/participants';
-import { Lock, LogOut } from 'lucide-react';
+import { Lock, LogOut, Star } from 'lucide-react';
+import MyPortfolioModal from '../../components/MyPortfolioModal';
 
 export default function MissionsPage() {
   const [currentDay, setCurrentDay] = useState<number>(1);
   const [missions, setMissions] = useState<Mission[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   
   // Auth state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -162,9 +164,23 @@ export default function MissionsPage() {
             </div>
           </div>
 
-          <main className="relative z-10 px-4">
+          <main className="relative z-10 px-4 flex flex-col gap-8">
             <MissionForm currentDay={currentDay} onMissionSubmit={onMissionSubmit} cohortId={currentCohort} />
+
+            <div className="w-full max-w-2xl mx-auto flex justify-center md:justify-end mb-2">
+              <button
+                onClick={() => setIsPortfolioOpen(true)}
+                className="flex items-center gap-2 px-6 py-3 bg-astra-navy/60 border border-astra-gold/40 rounded-full text-astra-gold hover:bg-astra-blue/50 hover:border-astra-gold hover:-translate-y-1 transition-all duration-300 font-serif shadow-[0_0_15px_rgba(217,187,123,0.2)] tracking-widest text-sm"
+              >
+                <Star className="w-[18px] h-[18px]" /> 나의 북극성 모아보기 &gt;
+              </button>
+            </div>
+
             <MissionFeed missions={missions} isLoading={isLoading} />
+
+            {isPortfolioOpen && (
+              <MyPortfolioModal cohortId={currentCohort} onClose={() => setIsPortfolioOpen(false)} />
+            )}
           </main>
         </>
       )}
