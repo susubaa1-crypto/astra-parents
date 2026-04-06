@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Send, CheckCircle2, Camera, X, Clock, ChevronDown, ChevronUp, BookOpen } from 'lucide-react';
 import { cohorts } from '../data/participants';
 import { curriculumMissions } from '../data/curriculum';
+import imageCompression from 'browser-image-compression';
 
 interface MissionFormProps {
   currentDay: number;
@@ -80,13 +81,21 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     try {
       let uploadedImageUrl = undefined;
 
-      // 1. 이미지가 있으면 먼저 Vercel Blob에 업로드
+      // 1. 이미지가 있으면 브라우저에서 압축 후 Vercel Blob에 업로드 (4.5MB 제한 우회)
       if (imageFile) {
-        const fileExt = imageFile.name.split('.').pop();
+        const options = {
+          maxSizeMB: 1,
+          maxWidthOrHeight: 1920,
+          useWebWorker: true,
+          initialQuality: 0.8
+        };
+        const compressedFile = await imageCompression(imageFile, options);
+
+        const fileExt = imageFile.name.split('.').pop() || 'jpg';
         const safeFileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
         const blobRes = await fetch(`/api/upload?filename=${safeFileName}`, {
           method: 'POST',
-          body: imageFile,
+          body: compressedFile,
         });
 
         if (!blobRes.ok) {
