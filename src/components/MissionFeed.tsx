@@ -10,6 +10,19 @@ interface MissionFeedProps {
   isLoading: boolean;
 }
 
+const PREFIX_ADJECTIVES = [
+  '소중한', '고마운', '사랑스러운', '다정한', '따뜻한', 
+  '빛나는', '지혜로운', '아름다운', '눈부신', '온화한', '포근한'
+];
+
+const getAdjective = (id: string) => {
+  let hash = 0;
+  for (let i = 0; i < id.length; i++) {
+    hash = id.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return PREFIX_ADJECTIVES[Math.abs(hash) % PREFIX_ADJECTIVES.length];
+};
+
 export default function MissionFeed({ missions, isLoading }: MissionFeedProps) {
   if (isLoading) {
     return (
@@ -44,7 +57,7 @@ export default function MissionFeed({ missions, isLoading }: MissionFeedProps) {
                 {mission.name.slice(0, 1)}
               </div>
               <div>
-                <p className="font-bold text-astra-starlight text-lg">{mission.name} 맘</p>
+                <p className="font-bold text-astra-starlight text-lg">{getAdjective(mission.id)} {mission.name}</p>
                 <p className="text-xs text-ink-gray">
                   {formatDistanceToNow(new Date(mission.created_at), { addSuffix: true, locale: ko })}
                 </p>
