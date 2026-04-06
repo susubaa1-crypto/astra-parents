@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
 export const dynamic = 'force-dynamic';
 export async function GET() {
-  const keys = Object.keys(process.env).filter(k => 
-    k.toLowerCase().includes('redis') || 
-    k.toLowerCase().includes('kv') || 
-    k.toLowerCase().includes('upstash')
-  );
-  return NextResponse.json({ keys });
+  return NextResponse.json({
+    hasKVURL: !!process.env.KV_REST_API_URL,
+    hasUpstashURL: !!process.env.UPSTASH_REDIS_REST_URL,
+    hasUpstashToken: !!process.env.UPSTASH_REDIS_REST_TOKEN,
+  });
 }
