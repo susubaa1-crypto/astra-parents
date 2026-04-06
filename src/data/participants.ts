@@ -231,6 +231,10 @@ export const participants = [
   {
     "name": "김영린",
     "phone": "01048025336"
+  },
+  {
+    "name": "김수진 키키맘",
+    "phone": "01000000000"
   }
 ];
 
