@@ -112,10 +112,13 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
         onMissionSubmit();
         
         setTimeout(() => setIsSuccess(false), 3000);
+      } else {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData.error || `서버 에러 (${res.status})`);
       }
-    } catch (error) {
-      console.error("Failed to submit mission", error);
-      alert("업로드 중 문제가 발생했습니다. 다시 시도해주세요.");
+    } catch (error: any) {
+      console.error("Failed to submit mission:", error);
+      alert(`업로드 실패: ${error?.message || '알 수 없는 오류'}`);
     } finally {
       setIsSubmitting(false);
     }
