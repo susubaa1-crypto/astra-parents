@@ -99,7 +99,8 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
         });
 
         if (!blobRes.ok) {
-          throw new Error('Image upload failed');
+          const errText = await blobRes.text().catch(() => '');
+          throw new Error(`Image API failed: ${blobRes.status} ${blobRes.statusText} - ${errText}`);
         }
 
         const blobData = await blobRes.json();
