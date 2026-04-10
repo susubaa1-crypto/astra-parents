@@ -92,7 +92,7 @@ export function HeroSection() {
                         <Link href="/diagnosis" className="group relative inline-flex items-center justify-center px-12 py-5 bg-astra-starlight text-astra-navy overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(217,187,123,0.3)] hover:-translate-y-1 rounded-sm border border-astra-gold/20">
                             <div className="absolute inset-0 bg-astra-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
                             <span className="relative z-10 text-[13px] font-sans transition-colors flex items-center gap-2 tracking-[0.2em] font-bold">
-                                북극성 만들기 여정 시작하기 🌟
+                                나의 부정언어 진단하기 🔍
                             </span>
                         </Link>
                     </div>
