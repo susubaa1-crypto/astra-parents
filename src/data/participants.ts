@@ -243,6 +243,7 @@ export interface Cohort {
   password: string;
   title: string;
   participants: { name: string; phone: string }[];
+  startDate?: string;
 }
 
 export const cohorts: Record<number, Cohort> = {
@@ -250,6 +251,7 @@ export const cohorts: Record<number, Cohort> = {
     id: 5,
     password: "kiki555",
     title: "5기 긍정언어챌린지",
-    participants: participants
+    participants: participants,
+    startDate: "2026-04-06"
   }
 };

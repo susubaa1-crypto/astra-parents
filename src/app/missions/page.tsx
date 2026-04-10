@@ -24,8 +24,24 @@ export default function MissionsPage() {
   useEffect(() => {
     const savedCohort = localStorage.getItem('astra_cohort');
     if (savedCohort && cohorts[parseInt(savedCohort, 10)]) {
-      setCurrentCohort(parseInt(savedCohort, 10));
+      const cohortId = parseInt(savedCohort, 10);
+      setCurrentCohort(cohortId);
       setIsAuthenticated(true);
+      
+      // Calculate today's mission day
+      const cohortData = cohorts[cohortId];
+      if (cohortData.startDate) {
+        const start = new Date(cohortData.startDate);
+        start.setHours(0, 0, 0, 0);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const diffTime = today.getTime() - start.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        
+        let calculatedDay = diffDays > 0 ? diffDays : 1;
+        if (calculatedDay > 18) calculatedDay = 18;
+        setCurrentDay(calculatedDay);
+      }
     }
   }, []);
 
@@ -71,6 +87,22 @@ export default function MissionsPage() {
       setCurrentCohort(matchedCohort.id);
       localStorage.setItem('astra_cohort', matchedCohort.id.toString());
       setIsAuthenticated(true);
+      
+      // Calculate today's mission day
+      if (matchedCohort.startDate) {
+        const start = new Date(matchedCohort.startDate);
+        start.setHours(0, 0, 0, 0);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const diffTime = today.getTime() - start.getTime();
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+        
+        let calculatedDay = diffDays > 0 ? diffDays : 1;
+        if (calculatedDay > 18) calculatedDay = 18;
+        setCurrentDay(calculatedDay);
+      } else {
+        setCurrentDay(1);
+      }
     } else {
       setAuthError('참여하신 기수의 비밀번호가 올바르지 않습니다.');
     }
