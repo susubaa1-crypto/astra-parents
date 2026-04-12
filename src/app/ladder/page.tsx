@@ -61,15 +61,18 @@ export default function LadderGamePage() {
   const [current, setCurrent] = useState<typeof situations[0] | null>(null);
   const [selectedLadder, setSelectedLadder] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [userSelectedOwner, setUserSelectedOwner] = useState<string | null>(null);
 
   const selectSituation = (idx: number) => {
     setCurrent(situations[idx]);
     setPhase("owner");
     setSelectedLadder(null);
     setShowResult(false);
+    setUserSelectedOwner(null);
   };
 
-  const chooseOwner = () => {
+  const chooseOwner = (owner: string) => {
+    setUserSelectedOwner(owner);
     setPhase("ladder");
   };
 
@@ -84,6 +87,7 @@ export default function LadderGamePage() {
     setCurrent(null);
     setSelectedLadder(null);
     setShowResult(false);
+    setUserSelectedOwner(null);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -166,7 +170,7 @@ export default function LadderGamePage() {
 
               <div className="flex gap-4 w-full max-w-md">
                 <button
-                  onClick={chooseOwner}
+                  onClick={() => chooseOwner("child")}
                   className="flex-1 bg-white/[0.04] border-2 border-white/10 rounded-xl p-5 text-center transition-all hover:border-astra-gold/50 hover:scale-[1.03] active:scale-95"
                 >
                   <div className="text-3xl mb-1">👦</div>
@@ -174,7 +178,7 @@ export default function LadderGamePage() {
                   <div className="text-xs text-white/40 mt-1 break-keep">아이가 행동의 선을 넘거나 욕구를 표출할 때</div>
                 </button>
                 <button
-                  onClick={chooseOwner}
+                  onClick={() => chooseOwner("mom")}
                   className="flex-1 bg-white/[0.04] border-2 border-white/10 rounded-xl p-5 text-center transition-all hover:border-astra-gold/50 hover:scale-[1.03] active:scale-95"
                 >
                   <div className="text-3xl mb-1">👩</div>
@@ -200,7 +204,7 @@ export default function LadderGamePage() {
               </div>
 
               <div className="text-astra-gold text-sm font-bold tracking-widest text-center">
-                {current.owner === "child"
+                {userSelectedOwner === "child"
                   ? "👦 아이의 행동이 원인 → 어떤 욕구가 숨어 있을까?"
                   : "👩 엄마의 내면이 원인 → 나의 상태는 어떤가?"}
               </div>
@@ -211,7 +215,7 @@ export default function LadderGamePage() {
 
               {/* Ladder Tracks */}
               <div className="flex justify-center w-full gap-2 md:gap-4 max-w-2xl mx-auto mb-10">
-                {ladderData.filter(ld => ld.owner === current.owner).map((ld) => {
+                {ladderData.filter(ld => ld.owner === userSelectedOwner).map((ld) => {
                   const isActive = selectedLadder === ld.id;
                   const isDimmed = selectedLadder !== null && selectedLadder !== ld.id;
 
