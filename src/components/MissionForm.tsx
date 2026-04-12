@@ -38,14 +38,14 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     return curriculumMissions.find(m => m.day === currentDay);
   }, [currentDay]);
 
-  // 마감 시간 계산 로직 (시작일 4월 6일 기준, 다음날 오전 6시 마감 KST)
+  // 마감 시간 계산 로직 (시작일 4월 6일 기준, 다음날 오전 6시 1분 마감 KST)
   const isExpired = useMemo(() => {
     if (!isClient) return false;
     
     const START_DATE = new Date('2026-04-06T00:00:00+09:00');
     const deadline = new Date(START_DATE);
     deadline.setDate(deadline.getDate() + currentDay); // Day 1이면 +1 해서 4월 7일
-    deadline.setHours(6, 0, 0, 0); // 06:00:00 KST
+    deadline.setHours(6, 1, 0, 0); // 06:01:00 KST
     
     return new Date() > deadline;
   }, [currentDay, isClient]);
