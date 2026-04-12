@@ -38,13 +38,23 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     return curriculumMissions.find(m => m.day === currentDay);
   }, [currentDay]);
 
-  // 마감 시간 계산 로직 (시작일 4월 6일 기준, 다음날 오전 6시 1분 마감 KST)
+  // 마감 시간 계산 로직 (중간 라이브 강의 휴식일 반영, 다음날 오전 6시 1분 마감 KST)
   const isExpired = useMemo(() => {
     if (!isClient) return false;
     
+    // 시작일 (DAY 1) = 2026-04-06
     const START_DATE = new Date('2026-04-06T00:00:00+09:00');
-    const deadline = new Date(START_DATE);
-    deadline.setDate(deadline.getDate() + currentDay); // Day 1이면 +1 해서 4월 7일
+    const missionDate = new Date(START_DATE);
+    
+    let offset = currentDay - 1;
+    if (currentDay >= 7) offset += 1; // 4/12(일) 휴식일 건너뜀
+    if (currentDay >= 13) offset += 1; // 4/19(일) 휴식일 건너뜀
+    
+    missionDate.setDate(missionDate.getDate() + offset);
+    
+    // 해당 과제의 마감은 그 다음날 06:01 AM
+    const deadline = new Date(missionDate);
+    deadline.setDate(deadline.getDate() + 1);
     deadline.setHours(6, 1, 0, 0); // 06:01:00 KST
     
     return new Date() > deadline;

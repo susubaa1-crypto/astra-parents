@@ -9,6 +9,35 @@ import { cohorts } from '../../data/participants';
 import { Lock, LogOut, Star } from 'lucide-react';
 import MyPortfolioModal from '../../components/MyPortfolioModal';
 
+// 시작일로부터 며칠차 과제인지 계산하는 헬퍼 함수 (라이브 강의 휴식일 고려)
+const calculateMissionDay = (startDate: string) => {
+  const start = new Date(startDate);
+  start.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diffTime = today.getTime() - start.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+  
+  if (diffDays <= 0) return 1;
+  
+  let missionDay = diffDays;
+  if (diffDays === 7) {
+    // 4월 12일 (휴식일) -> 6일차 문제 노출
+    missionDay = 6;
+  } else if (diffDays > 7 && diffDays <= 13) {
+    // 4월 13일 ~ 4월 18일 -> 7일차 ~ 12일차
+    missionDay = diffDays - 1;
+  } else if (diffDays === 14) {
+    // 4월 19일 (휴식일) -> 12일차 문제 노출
+    missionDay = 12;
+  } else if (diffDays > 14) {
+    // 4월 20일 이후 -> 13일차 ~ 18일차
+    missionDay = diffDays - 2;
+  }
+  
+  return missionDay > 18 ? 18 : missionDay;
+};
+
 export default function MissionsPage() {
   const [currentDay, setCurrentDay] = useState<number>(1);
   const [missions, setMissions] = useState<Mission[]>([]);
@@ -28,19 +57,9 @@ export default function MissionsPage() {
       setCurrentCohort(cohortId);
       setIsAuthenticated(true);
       
-      // Calculate today's mission day
       const cohortData = cohorts[cohortId];
       if (cohortData.startDate) {
-        const start = new Date(cohortData.startDate);
-        start.setHours(0, 0, 0, 0);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const diffTime = today.getTime() - start.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        
-        let calculatedDay = diffDays > 0 ? diffDays : 1;
-        if (calculatedDay > 18) calculatedDay = 18;
-        setCurrentDay(calculatedDay);
+        setCurrentDay(calculateMissionDay(cohortData.startDate));
       }
     }
   }, []);
@@ -88,18 +107,8 @@ export default function MissionsPage() {
       localStorage.setItem('astra_cohort', matchedCohort.id.toString());
       setIsAuthenticated(true);
       
-      // Calculate today's mission day
       if (matchedCohort.startDate) {
-        const start = new Date(matchedCohort.startDate);
-        start.setHours(0, 0, 0, 0);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        const diffTime = today.getTime() - start.getTime();
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
-        
-        let calculatedDay = diffDays > 0 ? diffDays : 1;
-        if (calculatedDay > 18) calculatedDay = 18;
-        setCurrentDay(calculatedDay);
+        setCurrentDay(calculateMissionDay(matchedCohort.startDate));
       } else {
         setCurrentDay(1);
       }
