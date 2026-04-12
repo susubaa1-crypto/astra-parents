@@ -55,7 +55,13 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     // 해당 과제의 마감은 그 다음날 06:01 AM
     const deadline = new Date(missionDate);
     deadline.setDate(deadline.getDate() + 1);
-    deadline.setHours(6, 1, 0, 0); // 06:01:00 KST
+    
+    // 특별 대응: 6일차 미션은 오늘(4/12) 밤 9시까지 제출 가능하도록 연장
+    if (currentDay === 6) {
+      deadline.setHours(21, 0, 0, 0); // 21:00:00 KST
+    } else {
+      deadline.setHours(6, 1, 0, 0); // 기본 06:01:00 KST
+    }
     
     return new Date() > deadline;
   }, [currentDay, isClient]);
