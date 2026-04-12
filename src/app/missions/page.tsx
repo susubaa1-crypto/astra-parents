@@ -38,6 +38,25 @@ const calculateMissionDay = (startDate: string) => {
   return missionDay > 18 ? 18 : missionDay;
 };
 
+// 며칠차인지 기반으로 해당 날짜 텍스트를 반환하는 헬퍼 함수
+const getDateStringForDay = (day: number, startDateStr?: string) => {
+  if (!startDateStr) return '';
+  const date = new Date(startDateStr);
+  
+  let offset = day - 1;
+  if (day >= 7) offset += 1; // 4/12 휴식
+  if (day >= 13) offset += 1; // 4/19 휴식
+  
+  date.setDate(date.getDate() + offset);
+  
+  const month = date.getMonth() + 1;
+  const dateNum = date.getDate();
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  const dayName = days[date.getDay()];
+  
+  return `${month}.${dateNum}(${dayName})`;
+};
+
 export default function MissionsPage() {
   const [currentDay, setCurrentDay] = useState<number>(1);
   const [missions, setMissions] = useState<Mission[]>([]);
@@ -189,19 +208,25 @@ export default function MissionsPage() {
           {/* Tabs */}
           <div className="relative z-10 w-full max-w-3xl mx-auto px-4 mb-10">
             <div className="flex overflow-x-auto hide-scrollbar gap-3 pb-4 px-2">
-              {Array.from({ length: 18 }, (_, i) => i + 1).map((day) => (
-                <button
-                  key={day}
-                  onClick={() => handleDaySelect(day)}
-                  className={`flex-shrink-0 px-6 py-2.5 rounded-full font-serif text-sm tracking-widest transition-all duration-300 border ${
-                    currentDay === day
-                      ? 'bg-astra-gold text-astra-navy border-astra-gold shadow-[0_0_15px_var(--color-astra-glow)] transform scale-105 font-bold'
-                      : 'bg-astra-blue/50 text-ink-light border-white/10 hover:bg-astra-blue hover:text-astra-gold backdrop-blur-sm'
-                  }`}
-                >
-                  Day {day}
-                </button>
-              ))}
+              {Array.from({ length: 18 }, (_, i) => i + 1).map((day) => {
+                const dateStr = getDateStringForDay(day, cohorts[currentCohort]?.startDate);
+                return (
+                  <button
+                    key={day}
+                    onClick={() => handleDaySelect(day)}
+                    className={`flex-shrink-0 px-5 py-2 rounded-[20px] font-serif tracking-widest transition-all duration-300 border flex flex-col items-center gap-0.5 min-w-[80px] ${
+                      currentDay === day
+                        ? 'bg-astra-gold text-astra-navy border-astra-gold shadow-[0_0_15px_var(--color-astra-glow)] transform scale-105 font-bold'
+                        : 'bg-astra-blue/50 text-ink-light border-white/10 hover:bg-astra-blue hover:text-astra-gold backdrop-blur-sm'
+                    }`}
+                  >
+                    <span className="text-sm">Day {day}</span>
+                    <span className={`text-[10px] font-sans font-light tracking-[0.05em] ${currentDay === day ? 'text-astra-navy/80 font-semibold' : 'text-ink-gray'}`}>
+                      {dateStr}
+                    </span>
+                  </button>
+                );
+              })}
             </div>
           </div>
 
