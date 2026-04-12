@@ -38,8 +38,8 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     return curriculumMissions.find(m => m.day === currentDay);
   }, [currentDay]);
 
-  // 마감 시간 계산 로직 (중간 라이브 강의 휴식일 반영, 다음날 오전 6시 1분 마감 KST)
-  const isExpired = useMemo(() => {
+  // 인증 마감 시간 계산 (다음날 오전 6시 1분 KST 기준 — 표시용, 제출 차단 없음)
+  const isLate = useMemo(() => {
     if (!isClient) return false;
     
     // 시작일 (DAY 1) = 2026-04-06
@@ -52,16 +52,10 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
     
     missionDate.setDate(missionDate.getDate() + offset);
     
-    // 해당 과제의 마감은 그 다음날 06:01 AM
+    // 인증 기준 시간: 다음날 06:01 AM KST
     const deadline = new Date(missionDate);
     deadline.setDate(deadline.getDate() + 1);
-    
-    // 특별 대응: 6일차 미션은 오늘(4/12) 밤 9시까지 제출 가능하도록 연장
-    if (currentDay === 6) {
-      deadline.setHours(21, 0, 0, 0); // 21:00:00 KST
-    } else {
-      deadline.setHours(6, 1, 0, 0); // 기본 06:01:00 KST
-    }
+    deadline.setHours(6, 1, 0, 0); // 06:01:00 KST
     
     return new Date() > deadline;
   }, [currentDay, isClient]);
@@ -89,7 +83,6 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (isExpired) return;
     if (!name || !content) return;
 
     setIsSubmitting(true);
@@ -212,15 +205,14 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
           <CheckCircle2 size={56} className="mb-4 drop-shadow-[0_0_10px_var(--color-astra-glow)]" />
           <p className="font-serif text-lg tracking-wide">미션 인증 완료! 북극성이 하나 더 빛납니다 🌟</p>
         </div>
-      ) : isExpired ? (
-        <div className="flex flex-col items-center justify-center py-12 px-4 bg-black/20 rounded-xl border border-white/5 text-ink-gray">
-          <Clock size={40} className="mb-4 text-ink-gray/60" />
-          <p className="font-serif text-xl md:text-2xl text-astra-starlight mb-2 tracking-widest text-center">
-            과제 제출이 마감되었습니다
-          </p>
-          <p className="text-sm">매일 주어지는 소중한 약속, 내일 미션을 기대해 주세요.</p>
-        </div>
       ) : (
+        <>
+          {isLate && (
+            <div className="flex items-center gap-2 mb-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-sans">
+              <Clock size={16} className="shrink-0" />
+              <span>인증 시간(오전 6:01)이 지났지만, <strong>과제 제출은 가능</strong>합니다. 늦더라도 꼭 기록해주세요!</span>
+            </div>
+          )}
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <label htmlFor="name" className="text-sm font-sans tracking-wide text-ink-light">이름</label>
@@ -294,6 +286,7 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
             )}
           </button>
         </form>
+        </>
       )}
     </div>
   );

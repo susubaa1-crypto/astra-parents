@@ -41,7 +41,10 @@ const calculateMissionDay = (startDate: string) => {
 // 며칠차인지 기반으로 해당 날짜 텍스트를 반환하는 헬퍼 함수
 const getDateStringForDay = (day: number, startDateStr?: string) => {
   if (!startDateStr) return '';
-  const date = new Date(startDateStr);
+  
+  // 강제로 KST 시간 기준으로 생성하여 오차 방지
+  const safeDateStr = startDateStr.includes('T') ? startDateStr : `${startDateStr}T00:00:00+09:00`;
+  const date = new Date(safeDateStr);
   
   let offset = day - 1;
   if (day >= 7) offset += 1; // 4/12 휴식
@@ -54,7 +57,7 @@ const getDateStringForDay = (day: number, startDateStr?: string) => {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
   const dayName = days[date.getDay()];
   
-  return `${month}.${dateNum}(${dayName})`;
+  return `${month}/${dateNum}(${dayName})`;
 };
 
 export default function MissionsPage() {
@@ -201,7 +204,7 @@ export default function MissionsPage() {
               {cohorts[currentCohort]?.title} 채널
             </div>
             <p className="text-ink-light font-light text-[17px] md:text-xl tracking-wide max-w-2xl mx-auto leading-relaxed">
-              우리 아이들이 엄마가 없어도 세상 속에서 길을 잃지 않도록,<br />단단한 북극성을 세워가는 {currentDay}일차 여정 🌟
+              우리 아이들이 엄마가 없어도 세상 속에서 길을 잃지 않도록,<br />단단한 북극성을 세워가는 21일 여정 🌟
             </p>
           </header>
 
