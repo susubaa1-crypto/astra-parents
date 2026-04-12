@@ -47,15 +47,13 @@ const situations = [
     why: "자기 비난 대신 → 나의 감정을 솔직하게 인정하고 토닥여줍니다."
   },
 ];
-
 const ladderData = [
-  { name: "선택과 질문 언어", emoji: "🎯", need: "자율성", colorClass: "text-teal-400 border-teal-400", bgClass: "bg-teal-400", glowClass: "shadow-[0_0_20px_rgba(20,184,166,0.3)]", resultBg: "bg-teal-400/10 border-teal-400/40" },
-  { name: "공감 수용 언어", emoji: "🫂", need: "연결", colorClass: "text-blue-400 border-blue-400", bgClass: "bg-blue-400", glowClass: "shadow-[0_0_20px_rgba(59,130,246,0.3)]", resultBg: "bg-blue-400/10 border-blue-400/40" },
-  { name: "기준이 있는 언어", emoji: "⚖️", need: "안전 확인", colorClass: "text-violet-400 border-violet-400", bgClass: "bg-violet-400", glowClass: "shadow-[0_0_20px_rgba(139,92,246,0.3)]", resultBg: "bg-violet-400/10 border-violet-400/40" },
-  { name: "솔직한 언어", emoji: "🔋", need: "에너지 고갈", colorClass: "text-pink-400 border-pink-400", bgClass: "bg-pink-400", glowClass: "shadow-[0_0_20px_rgba(236,72,153,0.3)]", resultBg: "bg-pink-400/10 border-pink-400/40" },
-  { name: "과정 존중 언어", emoji: "⏳", need: "조급함", colorClass: "text-amber-400 border-amber-400", bgClass: "bg-amber-400", glowClass: "shadow-[0_0_20px_rgba(245,158,11,0.3)]", resultBg: "bg-amber-400/10 border-amber-400/40" },
+  { id: 0, owner: "child", name: "선택과 질문 언어", emoji: "🎯", need: "자율성", colorClass: "text-teal-400 border-teal-400", bgClass: "bg-teal-400", glowClass: "shadow-[0_0_20px_rgba(20,184,166,0.3)]", resultBg: "bg-teal-400/10 border-teal-400/40" },
+  { id: 1, owner: "child", name: "공감 수용 언어", emoji: "🫂", need: "연결", colorClass: "text-blue-400 border-blue-400", bgClass: "bg-blue-400", glowClass: "shadow-[0_0_20px_rgba(59,130,246,0.3)]", resultBg: "bg-blue-400/10 border-blue-400/40" },
+  { id: 2, owner: "child", name: "기준이 있는 언어", emoji: "⚖️", need: "안전 확인", colorClass: "text-violet-400 border-violet-400", bgClass: "bg-violet-400", glowClass: "shadow-[0_0_20px_rgba(139,92,246,0.3)]", resultBg: "bg-violet-400/10 border-violet-400/40" },
+  { id: 3, owner: "mom", name: "솔직한 언어", emoji: "🔋", need: "에너지 고갈", colorClass: "text-pink-400 border-pink-400", bgClass: "bg-pink-400", glowClass: "shadow-[0_0_20px_rgba(236,72,153,0.3)]", resultBg: "bg-pink-400/10 border-pink-400/40" },
+  { id: 4, owner: "mom", name: "과정 존중 언어", emoji: "⏳", need: "조급함", colorClass: "text-amber-400 border-amber-400", bgClass: "bg-amber-400", glowClass: "shadow-[0_0_20px_rgba(245,158,11,0.3)]", resultBg: "bg-amber-400/10 border-amber-400/40" },
 ];
-
 type Phase = "situation" | "owner" | "ladder";
 
 export default function LadderGamePage() {
@@ -212,25 +210,25 @@ export default function LadderGamePage() {
               )}
 
               {/* Ladder Tracks */}
-              <div className="flex justify-around w-full gap-1 md:gap-3">
-                {ladderData.map((ld, i) => {
-                  const isActive = selectedLadder === i;
-                  const isDimmed = selectedLadder !== null && selectedLadder !== i;
+              <div className="flex justify-center w-full gap-2 md:gap-4 max-w-2xl mx-auto mb-10">
+                {ladderData.filter(ld => ld.owner === current.owner).map((ld) => {
+                  const isActive = selectedLadder === ld.id;
+                  const isDimmed = selectedLadder !== null && selectedLadder !== ld.id;
 
                   return (
                     <button
-                      key={i}
-                      onClick={() => selectLadder(i)}
+                      key={ld.id}
+                      onClick={() => selectLadder(ld.id)}
                       disabled={selectedLadder !== null}
-                      className={`flex flex-col items-center w-[18%] transition-all duration-500 ${isDimmed ? "opacity-[0.12] pointer-events-none" : ""}`}
+                      className={`flex flex-col items-center flex-1 max-w-[130px] md:max-w-[150px] transition-all duration-500 ${isDimmed ? "opacity-[0.12] pointer-events-none" : ""}`}
                     >
                       {/* Top: Need */}
-                      <div className={`w-full py-2 md:py-3 px-1 rounded-xl text-center text-[0.7rem] md:text-sm font-bold border-2 bg-astra-navy transition-all break-keep ${ld.colorClass} ${isActive ? ld.glowClass : ""} ${!isDimmed && selectedLadder === null ? "hover:scale-105" : ""}`}>
+                      <div className={`w-full py-2 md:py-4 px-1 rounded-xl text-center text-[0.75rem] md:text-sm font-bold border-2 bg-astra-navy transition-all break-keep min-h-[50px] flex items-center justify-center ${ld.colorClass} ${isActive ? ld.glowClass : ""} ${!isDimmed && selectedLadder === null ? "hover:scale-105" : ""}`}>
                         {ld.emoji} {ld.need}
                       </div>
 
                       {/* Line */}
-                      <div className="w-[3px] h-20 md:h-28 relative my-1">
+                      <div className="w-[4px] h-24 md:h-32 relative my-2">
                         <div className={`w-full h-full ${ld.bgClass} opacity-20 rounded`} />
                         <div
                           className={`absolute top-0 left-0 w-full rounded ${ld.bgClass} transition-all duration-[1200ms] ease-[cubic-bezier(0.22,1,0.36,1)]`}
@@ -239,7 +237,7 @@ export default function LadderGamePage() {
                       </div>
 
                       {/* Bottom: Language */}
-                      <div className={`w-full py-2 md:py-3 px-1 rounded-xl text-center text-[0.65rem] md:text-xs font-semibold bg-white/[0.04] border-2 break-keep transition-all duration-500 ${isActive ? `${ld.colorClass} opacity-100` : "border-transparent opacity-30"}`}>
+                      <div className={`w-full py-2 md:py-3 px-1 rounded-xl text-center text-[0.7rem] md:text-xs font-semibold bg-white/[0.04] border-2 break-keep min-h-[50px] flex items-center justify-center transition-all duration-500 ${isActive ? `${ld.colorClass} opacity-100` : "border-transparent opacity-30"}`}>
                         {ld.name}
                       </div>
                     </button>
