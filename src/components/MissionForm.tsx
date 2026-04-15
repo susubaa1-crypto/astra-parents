@@ -149,9 +149,10 @@ export default function MissionForm({ currentDay, cohortId, onMissionSubmit }: M
         <h3 className="font-serif text-xl md:text-2xl text-astra-glow flex items-center gap-2 drop-shadow-sm">
           <span>✨</span> Day {currentDay} : {currentMission?.title || "미션 인증하기"}
         </h3>
-        <p className="text-ink-light font-sans text-sm md:text-base leading-relaxed bg-astra-navy/50 p-5 rounded-xl border border-astra-gold/20 shadow-inner">
-          {currentMission?.description || "오늘의 미션을 진행하고 느낀 점을 자유롭게 적어주세요."}
-        </p>
+        <div 
+          className="text-ink-light font-sans text-sm md:text-base leading-relaxed bg-astra-navy/50 p-5 rounded-xl border border-astra-gold/20 shadow-inner"
+          dangerouslySetInnerHTML={{ __html: currentMission?.description || "오늘의 미션을 진행하고 느낀 점을 자유롭게 적어주세요." }}
+        />
       </div>
 
       <div className="mb-8">
