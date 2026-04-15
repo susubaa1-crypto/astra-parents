@@ -50,7 +50,7 @@ const situations = [
 const ladderData = [
   { id: 0, owner: "child", name: "선택과 질문 언어", emoji: "🎯", need: "자율성", colorClass: "text-teal-400 border-teal-400", bgClass: "bg-teal-400", glowClass: "shadow-[0_0_20px_rgba(20,184,166,0.3)]", resultBg: "bg-teal-400/10 border-teal-400/40" },
   { id: 1, owner: "child", name: "공감 수용 언어", emoji: "🫂", need: "연결", colorClass: "text-blue-400 border-blue-400", bgClass: "bg-blue-400", glowClass: "shadow-[0_0_20px_rgba(59,130,246,0.3)]", resultBg: "bg-blue-400/10 border-blue-400/40" },
-  { id: 2, owner: "child", name: "기준이 있는 언어", emoji: "⚖️", need: "안전 확인", colorClass: "text-violet-400 border-violet-400", bgClass: "bg-violet-400", glowClass: "shadow-[0_0_20px_rgba(139,92,246,0.3)]", resultBg: "bg-violet-400/10 border-violet-400/40" },
+  { id: 2, owner: "child", name: "기준이 있는 언어", emoji: "⚖️", need: "과한 즐거움", colorClass: "text-violet-400 border-violet-400", bgClass: "bg-violet-400", glowClass: "shadow-[0_0_20px_rgba(139,92,246,0.3)]", resultBg: "bg-violet-400/10 border-violet-400/40" },
   { id: 3, owner: "mom", name: "솔직한 언어", emoji: "🔋", need: "에너지 고갈", colorClass: "text-pink-400 border-pink-400", bgClass: "bg-pink-400", glowClass: "shadow-[0_0_20px_rgba(236,72,153,0.3)]", resultBg: "bg-pink-400/10 border-pink-400/40" },
   { id: 4, owner: "mom", name: "과정 존중 언어", emoji: "⏳", need: "조급함", colorClass: "text-amber-400 border-amber-400", bgClass: "bg-amber-400", glowClass: "shadow-[0_0_20px_rgba(245,158,11,0.3)]", resultBg: "bg-amber-400/10 border-amber-400/40" },
 ];
@@ -62,6 +62,10 @@ export default function LadderGamePage() {
   const [selectedLadder, setSelectedLadder] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [userSelectedOwner, setUserSelectedOwner] = useState<string | null>(null);
+
+  const [customMode, setCustomMode] = useState(false);
+  const [customSituationText, setCustomSituationText] = useState("");
+  const [isGenerating, setIsGenerating] = useState(false);
 
   const selectSituation = (idx: number) => {
     setCurrent(situations[idx]);
@@ -76,10 +80,39 @@ export default function LadderGamePage() {
     setPhase("ladder");
   };
 
-  const selectLadder = (idx: number) => {
+  const selectLadder = async (idx: number) => {
     if (selectedLadder !== null) return;
     setSelectedLadder(idx);
-    setTimeout(() => setShowResult(true), 1200);
+
+    if (customMode && current) {
+      const selectedLadderData = ladderData.find(ld => ld.id === idx);
+      setCurrent({ ...current, ladder: idx });
+      setShowResult(true);
+      setIsGenerating(true);
+
+      try {
+        const res = await fetch("/api/generate-language", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ 
+            situation: current.label, 
+            ladderName: selectedLadderData?.name 
+          })
+        });
+        const data = await res.json();
+        if(res.ok) {
+           setCurrent(prev => prev ? { ...prev, bad: data.bad, good: data.good, why: data.why } : prev);
+        } else {
+           setCurrent(prev => prev ? { ...prev, bad: "API 키 설정 필요", good: "OPENAI_API_KEY를 .env.local에 추가하세요", why: data.error } : prev);
+        }
+      } catch (e) {
+        setCurrent(prev => prev ? { ...prev, bad: "통신 오류", good: "요청이 실패했습니다.", why: "다시 시도해주세요." } : prev);
+      } finally {
+        setIsGenerating(false);
+      }
+    } else {
+      setTimeout(() => setShowResult(true), 1200);
+    }
   };
 
   const reset = () => {
@@ -88,6 +121,8 @@ export default function LadderGamePage() {
     setSelectedLadder(null);
     setShowResult(false);
     setUserSelectedOwner(null);
+    setCustomMode(false);
+    setCustomSituationText("");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -122,21 +157,41 @@ export default function LadderGamePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.4 }}
+              className="flex flex-col items-center justify-center pt-10 pb-5"
             >
-              <div className="text-center mb-5">
-                <span className="text-astra-gold text-sm font-bold tracking-widest uppercase">⚡ 자극 상황을 선택하세요</span>
-              </div>
-              <div className="grid grid-cols-2 gap-3 md:gap-4">
-                {situations.map((s, i) => (
+              <div className="text-center mb-10 w-full">
+                <span className="text-astra-gold text-lg md:text-xl font-bold tracking-widest block mb-8">✏️ 어떤 곤란한 일이 있었나요?</span>
+                <div className="flex bg-white/[0.04] p-2 rounded-2xl border border-white/10 focus-within:border-astra-gold/50 transition-colors w-full max-w-xl mx-auto shadow-[0_0_20px_rgba(0,0,0,0.4)]">
+                  <input
+                    type="text"
+                    value={customSituationText}
+                    onChange={(e) => setCustomSituationText(e.target.value)}
+                    placeholder="상황을 적어주세요. (예: 밥 먹으라고 해도 계속 돌아다녀요)"
+                    className="flex-1 bg-transparent px-5 py-4 text-base md:text-lg text-white placeholder-white/30 outline-none w-full"
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && customSituationText.trim()) {
+                         setCurrent({ emoji: "📝", label: customSituationText.trim(), owner: "", ladder: 0, bad: "...", good: "...", why: "..." });
+                         setCustomMode(true);
+                         setPhase("owner");
+                      }
+                    }}
+                  />
                   <button
-                    key={i}
-                    onClick={() => selectSituation(i)}
-                    className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-5 md:p-6 text-center cursor-pointer transition-all hover:border-astra-gold/50 hover:-translate-y-1 hover:shadow-[0_8px_30px_rgba(0,0,0,0.4)] active:scale-95"
+                    onClick={() => {
+                      if (customSituationText.trim()) {
+                         setCurrent({ emoji: "📝", label: customSituationText.trim(), owner: "", ladder: 0, bad: "...", good: "...", why: "..." });
+                         setCustomMode(true);
+                         setPhase("owner");
+                      }
+                    }}
+                    className="bg-astra-gold text-black px-8 py-3 rounded-xl font-bold text-base hover:bg-yellow-400 transition ml-2 whitespace-nowrap"
                   >
-                    <div className="text-3xl mb-2">{s.emoji}</div>
-                    <div className="text-[0.95rem] font-semibold text-astra-starlight leading-snug break-keep">{s.label}</div>
+                    사다리 타기
                   </button>
-                ))}
+                </div>
+                <p className="text-sm text-white/50 mt-6 leading-relaxed">
+                  자신의 상황을 적고 사다리를 타면,<br/>AI가 가장 이상적인 맞춤형 긍정언어 솔루션을 만들어 줍니다.
+                </p>
               </div>
             </motion.div>
           )}
@@ -186,6 +241,16 @@ export default function LadderGamePage() {
                   <div className="text-xs text-white/40 mt-1 break-keep">내 마음의 여유가 없어서 더 예민한 건 아닌지</div>
                 </button>
               </div>
+
+              <button
+                onClick={() => {
+                  setPhase("situation");
+                  setUserSelectedOwner(null);
+                }}
+                className="mt-6 px-4 py-2 text-white/30 hover:text-white/70 transition-all text-xs font-medium border border-transparent hover:border-white/10 rounded-lg flex items-center gap-1"
+              >
+                🔙 다른 상황 선택하기
+              </button>
             </motion.div>
           )}
 
@@ -210,7 +275,18 @@ export default function LadderGamePage() {
               </div>
 
               {selectedLadder === null && (
-                <p className="text-astra-starlight text-base font-medium">어떤 사다리를 타볼까요? 클릭하세요!</p>
+                <div className="flex flex-col items-center gap-3">
+                  <p className="text-astra-starlight text-base font-medium">어떤 사다리를 타볼까요? 클릭하세요!</p>
+                  <button
+                    onClick={() => {
+                      setPhase("owner");
+                      setUserSelectedOwner(null);
+                    }}
+                    className="px-4 py-2 text-white/30 hover:text-white/70 transition-all text-sm font-medium border border-transparent hover:border-white/10 rounded-lg flex items-center gap-1"
+                  >
+                    🔙 누구의 문제인지 다시 선택하기
+                  </button>
+                </div>
               )}
 
               {/* Ladder Tracks */}
@@ -249,38 +325,52 @@ export default function LadderGamePage() {
                 })}
               </div>
 
-              {/* Result Card */}
               <AnimatePresence>
                 {showResult && selectedLadder !== null && (
                   <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    className={`w-full max-w-lg rounded-2xl p-6 md:p-8 text-center border-2 ${ladderData[selectedLadder].resultBg}`}
+                    className={`w-full max-w-lg rounded-2xl p-6 md:p-8 text-center border-2 ${ladderData[current.ladder].resultBg} shadow-2xl backdrop-blur-md relative overflow-hidden`}
                   >
-                    {selectedLadder === current.ladder ? (
-                      <div className={`text-sm font-bold tracking-wider mb-1 ${ladderData[selectedLadder].colorClass.split(" ")[0]}`}>✨ 정확합니다!</div>
-                    ) : (
-                      <div className="text-sm font-bold tracking-wider mb-1 text-white/60">
-                        💡 이 상황에서는 「{ladderData[current.ladder].name}」가 더 잘 맞아요
+                    {isGenerating ? (
+                      <div className="py-10 flex flex-col items-center justify-center gap-5">
+                         <div className="w-10 h-10 border-4 border-white/10 border-t-astra-gold rounded-full animate-spin" />
+                         <div className="text-white/70 animate-pulse text-sm font-medium">✨ 문장을 만들고 있어요...</div>
                       </div>
+                    ) : (
+                      <>
+                        {customMode ? (
+                          <div className={`text-sm font-bold tracking-wider mb-2 ${ladderData[current.ladder].colorClass.split(" ")[0]}`}>✨ AI 맞춤 솔루션!</div>
+                        ) : selectedLadder === current.ladder ? (
+                          <div className={`text-sm font-bold tracking-wider mb-2 ${ladderData[current.ladder].colorClass.split(" ")[0]}`}>✨ 정확합니다!</div>
+                        ) : userSelectedOwner !== current.owner ? (
+                          <div className="text-sm font-bold tracking-wider mb-2 text-white/60 leading-relaxed">
+                            💡 앗! 번지수를 잘못 찾았어요.<br/>이 상황은 <b>{current.owner === 'mom' ? '👩 엄마의 내면 우선' : '👦 아이의 행동 욕구'}</b>을(를) 들여다보는 사다리가 필요해요!
+                          </div>
+                        ) : (
+                          <div className="text-sm font-bold tracking-wider mb-2 text-white/60">
+                            💡 아쉽네요, 이 상황에서는 이런 언어가 필요해요:
+                          </div>
+                        )}
+
+                        <div className={`text-2xl md:text-3xl font-extrabold mb-3 ${ladderData[current.ladder].colorClass.split(" ")[0]}`}>
+                          {ladderData[current.ladder].name}
+                        </div>
+
+                        <div className={`w-10 h-0.5 mx-auto mb-4 ${ladderData[current.ladder].bgClass} opacity-40`} />
+
+                        <div className="text-red-400 line-through text-sm mb-2 opacity-80">
+                          ❌ {current.bad}
+                        </div>
+                        <div className={`text-base md:text-lg font-bold leading-relaxed break-keep ${ladderData[current.ladder].colorClass.split(" ")[0]}`}>
+                          ⭕ {current.good}
+                        </div>
+                        <div className="text-white/50 text-sm mt-4 leading-relaxed break-keep">
+                          {current.why}
+                        </div>
+                      </>
                     )}
-
-                    <div className={`text-2xl md:text-3xl font-extrabold mb-3 ${ladderData[selectedLadder].colorClass.split(" ")[0]}`}>
-                      {ladderData[selectedLadder].name}
-                    </div>
-
-                    <div className={`w-10 h-0.5 mx-auto mb-4 ${ladderData[selectedLadder].bgClass} opacity-40`} />
-
-                    <div className="text-red-400 line-through text-sm mb-2 opacity-80">
-                      ❌ {current.bad}
-                    </div>
-                    <div className={`text-base md:text-lg font-bold leading-relaxed break-keep ${ladderData[current.ladder].colorClass.split(" ")[0]}`}>
-                      ⭕ {current.good}
-                    </div>
-                    <div className="text-white/50 text-sm mt-4 leading-relaxed break-keep">
-                      {current.why}
-                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
