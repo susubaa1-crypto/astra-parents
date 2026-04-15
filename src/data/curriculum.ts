@@ -66,7 +66,7 @@ export const curriculumMissions: DailyMissionConfig[] = [
   {
     day: 10,
     title: "긍정언어 실전 투입 🗣️",
-    description: "어제 만든 긍정언어를 오늘 가족에게 직접 소리 내어 3번 이상 말해보세요. 그때 그들의 반응과 내 기분이 어땠는지 자세히 인증해주세요.",
+    description: "어제 만든 긍정언어를 오늘 가족에게 직접 소리 내어 3번 이상 말해보세요. 그때 그들의 반응과 내 기분이 어땠는지 자세히 인증해주세요. (💡 나의 부정언어를 긍정언어로 단번에 번역하고 싶다면? 10초 AI 사다리게임을 해보세요! 👉 https://astra-parents.vercel.app/ladder)",
     type: "긍정 무의식 심기"
   },
   {
