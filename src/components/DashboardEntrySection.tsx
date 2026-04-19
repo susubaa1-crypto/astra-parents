@@ -37,16 +37,30 @@ export function DashboardEntrySection() {
                     </p>
                 </div>
 
-                <div className="space-y-8">
-                    <Link href="/dashboard" className="group relative inline-flex items-center justify-center px-12 py-5 bg-paper-cream text-ink-charcoal overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(255,107,53,0.3)] hover:-translate-y-1 drawing-border">
-                        <div className="absolute inset-0 bg-[var(--color-bonfire-orange)] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
-                        <span className="relative z-10 text-[12px] font-sans font-medium transition-colors group-hover:text-white flex items-center gap-2 tracking-[0.2em] font-semibold text-ink-charcoal group-hover:text-white">
-                            ✨ 엄마들의 진짜 리뷰 보러가기
-                        </span>
-                    </Link>
-                    <p className="text-[12px] font-sans text-paper-cream/40 italic tracking-wider">
-                        4번의 챌린지, 실제 수강생들의 과제 데이터 기록
-                    </p>
+                <div className="flex flex-col md:flex-row gap-4 md:gap-6 justify-center">
+                    <div className="space-y-4">
+                        <Link href="/dashboard" className="group w-full md:w-auto relative inline-flex items-center justify-center px-8 md:px-12 py-5 bg-paper-cream text-ink-charcoal overflow-hidden transition-all hover:shadow-[0_0_40px_rgba(255,107,53,0.3)] hover:-translate-y-1 drawing-border">
+                            <div className="absolute inset-0 bg-[var(--color-bonfire-orange)] translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                            <span className="relative z-10 text-[12px] font-sans font-medium transition-colors group-hover:text-white flex items-center gap-2 tracking-[0.2em] font-semibold text-ink-charcoal">
+                                ✨ 엄마들의 진짜 리뷰 보러가기
+                            </span>
+                        </Link>
+                        <p className="text-[11px] md:text-[12px] font-sans text-paper-cream/40 italic tracking-wider">
+                            수강생들의 과제 데이터 기록
+                        </p>
+                    </div>
+
+                    <div className="space-y-4 pt-4 md:pt-0">
+                        <Link href="/bms" className="group w-full md:w-auto relative inline-flex items-center justify-center px-8 md:px-12 py-5 bg-transparent border border-paper-cream/30 text-paper-cream overflow-hidden transition-all hover:border-astra-gold hover:shadow-[0_0_40px_rgba(200,165,100,0.3)] hover:-translate-y-1">
+                            <div className="absolute inset-0 bg-astra-gold translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" />
+                            <span className="relative z-10 text-[12px] font-sans font-medium transition-colors group-hover:text-ink-charcoal flex items-center gap-2 tracking-[0.2em] font-semibold">
+                                📊 나의 BMS 에너지 점검하기
+                            </span>
+                        </Link>
+                        <p className="text-[11px] md:text-[12px] font-sans text-paper-cream/40 italic tracking-wider">
+                            30문항으로 알아보는 무의식 상태
+                        </p>
+                    </div>
                 </div>
             </motion.div>
 
