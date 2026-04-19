@@ -98,7 +98,7 @@ export const curriculumMissions: DailyMissionConfig[] = [
   {
     day: 15,
     title: "5대 상황 긍정 리추얼 세팅 📝",
-    description: "일상의 결정적 순간인 5가지 상황(기상 직후, 외출할 때, 밥 먹을 때, 놀이할 때, 잠들기 직전)에 사용할 긍정어를 각각 적어 잘 보이는 곳에 부착하세요. 곧 우리 집만의 강력한 긍정 리추얼이 될 것입니다.",
+    description: "일상의 결정적 순간인 5가지 상황(기상 직후, 외출할 때, 밥 먹을 때, 놀이할 때, 잠들기 직전)에 사용할 긍정어를 각각 적어 잘 보이는 곳에 부착하세요. 곧 우리 집만의 강력한 긍정 리추얼이 될 것입니다.<br/><br/><a href='/positive-words' target='_blank' class='inline-block mt-2 px-4 py-2 bg-astra-gold/20 text-astra-gold hover:bg-astra-gold hover:text-black border border-astra-gold/50 rounded-lg font-bold transition-colors'>👉 상황별 긍정어 50개 샘플(컨닝페이퍼) 보러가기</a>",
     type: "환경 통제 중심"
   },
   {
