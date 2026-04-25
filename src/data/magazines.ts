@@ -43,5 +43,14 @@ export const magazines: Magazine[] = [
         thumbnail: "/astra/magazine_3.jpg",
         icon: "Sun",
         link: "https://drive.google.com/file/d/1LIODBrrBtGODOtScvXQ7EPcbzX1I2Q1i/view?usp=drive_link",
+    },
+    {
+        id: "2026-04",
+        month: "APRIL",
+        title: "외로움인 줄 알았는데 무서움이었다",
+        description: "외로움이라 믿었던 감정의 정체를 마주하고, 두려움 속에서 나를 지켜내는 이야기.",
+        thumbnail: "/astra/magazine_4.jpg",
+        icon: "Shield",
+        link: "https://drive.google.com/file/d/1BDqSC6Quqmz-XrjPC7TNo1KRrA9cfnMj/view?usp=drive_link",
     }
 ];
