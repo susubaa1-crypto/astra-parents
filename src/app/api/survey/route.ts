@@ -62,8 +62,8 @@ export async function POST(request: Request) {
     const key = getRedisKey(surveyResponse.cohort);
     const existing = await redis.get<SurveyResponse[]>(key) || [];
 
-    // 동일 이름으로 이미 제출한 경우 업데이트
-    const filtered = existing.filter(r => r.name !== name);
+    // 동일 이름으로 이미 제출한 경우 업데이트 (익명은 중복 허용)
+    const filtered = name === '익명' ? existing : existing.filter(r => r.name !== name);
     filtered.push(surveyResponse);
 
     await redis.set(key, filtered);

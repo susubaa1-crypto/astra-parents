@@ -6,7 +6,8 @@ import MissionFeed from '../../components/MissionFeed';
 import { Navigation } from '../../components/Navigation';
 import { Mission } from '../api/missions/route';
 import { cohorts } from '../../data/participants';
-import { Lock, LogOut, Star } from 'lucide-react';
+import { Lock, LogOut, Star, ClipboardList } from 'lucide-react';
+import Link from 'next/link';
 import MyPortfolioModal from '../../components/MyPortfolioModal';
 
 // 시작일로부터 며칠차 과제인지 계산하는 헬퍼 함수 (라이브 강의 휴식일 고려)
@@ -183,6 +184,18 @@ export default function MissionsPage() {
               </button>
             </form>
           </div>
+
+          {/* Survey CTA */}
+          <Link 
+            href="/survey"
+            className="mt-6 flex items-center gap-3 px-6 py-4 rounded-2xl border border-astra-gold/20 bg-astra-navy/40 backdrop-blur-sm text-astra-gold hover:bg-astra-gold/10 hover:border-astra-gold/40 transition-all duration-300 group max-w-md w-full"
+          >
+            <ClipboardList size={20} className="opacity-60 group-hover:opacity-100 transition-opacity" />
+            <div className="text-left">
+              <p className="text-sm font-serif tracking-wider">강의 만족도 설문하기</p>
+              <p className="text-[11px] text-ink-gray font-sans">3분이면 충분해요 💛</p>
+            </div>
+          </Link>
         </main>
       ) : (
         <>

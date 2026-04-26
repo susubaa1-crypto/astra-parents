@@ -17,6 +17,7 @@ import {
   Star,
   CheckCircle2,
   Sparkles,
+  UserX,
 } from "lucide-react";
 
 // ─── Star Rating Component ───
@@ -406,7 +407,7 @@ export default function SurveyPage() {
             </h1>
 
             <p className="text-ink-light font-light text-lg leading-relaxed break-keep">
-              {selectedName}님의 소중한 의견이<br />
+              {selectedName === "익명" ? "소중한 의견이" : <>{selectedName}님의 소중한 의견이</>}<br />
               잘 전달되었습니다 💛
             </p>
 
@@ -484,8 +485,31 @@ export default function SurveyPage() {
                 {/* Name Selection */}
                 <div className="space-y-4">
                   <label className="block text-lg font-serif text-astra-starlight">
-                    이름을 선택해주세요 <span className="text-astra-gold text-sm">*</span>
+                    이름을 선택하거나, 익명으로 참여할 수 있어요
                   </label>
+
+                  {/* Anonymous Button */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelectedName("익명");
+                      setNameSearch("");
+                    }}
+                    className={`w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl border transition-all duration-300 font-sans text-[15px] ${
+                      selectedName === "익명"
+                        ? "bg-astra-gold/15 border-astra-gold/50 text-astra-gold shadow-[0_0_15px_rgba(217,187,123,0.15)]"
+                        : "bg-white/[0.03] border-white/10 text-ink-light hover:border-white/20 hover:bg-white/[0.05]"
+                    }`}
+                  >
+                    <UserX size={18} className="opacity-70" />
+                    익명으로 참여하기
+                  </button>
+
+                  <div className="flex items-center gap-3 py-2">
+                    <div className="flex-1 h-[1px] bg-white/10" />
+                    <span className="text-[11px] text-ink-gray font-sans tracking-widest">또는 이름 선택</span>
+                    <div className="flex-1 h-[1px] bg-white/10" />
+                  </div>
 
                   <input
                     type="text"
@@ -495,7 +519,7 @@ export default function SurveyPage() {
                     className="w-full px-5 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-astra-starlight font-sans text-[15px] placeholder:text-ink-gray/40 focus:outline-none focus:border-astra-gold/50 transition-all"
                   />
 
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-2 max-h-[40vh] overflow-y-auto pr-1">
+                  <div className="grid grid-cols-3 md:grid-cols-4 gap-2 max-h-[30vh] overflow-y-auto pr-1">
                     {filteredParticipants.map((p) => (
                       <button
                         key={p.name}
