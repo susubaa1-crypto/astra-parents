@@ -36,6 +36,7 @@ export function Navigation() {
         { name: "결핍일기", href: "/magazine" },
         { name: "MISSIONS", href: "/missions" },
         { name: "REVIEW", href: "/dashboard" },
+        { name: "SURVEY", href: "/survey" },
     ];
 
     return (
