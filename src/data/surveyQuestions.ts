@@ -109,6 +109,16 @@ export const surveyQuestions: SurveyQuestion[] = [
     ],
     allowOther: true,
   },
+  {
+    id: 'recommendReason',
+    section: 3,
+    sectionTitle: '추천 의향',
+    sectionEmoji: '📣',
+    type: 'text',
+    label: '추천하고 싶은 이유가 있다면 자유롭게 적어주세요',
+    required: false,
+    placeholder: '예) 나처럼 육아가 막막한 엄마들에게 꼭 들어봤으면 좋겠어요...',
+  },
 
   // === Section 5: 향후 빌드업 ===
   {
@@ -126,6 +136,7 @@ export const surveyQuestions: SurveyQuestion[] = [
       '감정 코칭 실전편',
       '형제/자매 갈등 해결',
       '엄마의 자기돌봄 & 마인드셋',
+      '자기 치유 에세이 글쓰기',
       '가족 문화 설계 워크숍 (오프라인)',
     ],
     allowOther: true,
@@ -140,8 +151,9 @@ export const surveyQuestions: SurveyQuestion[] = [
     required: true,
     options: [
       '3주 온라인 챌린지 (현재와 동일)',
-      '1일 집중 워크숍',
-      '주 1회 정기 모임',
+      '1일 6시간 집중 워크숍 (오프라인)',
+      '월 1회 정기 모임 (온라인)',
+      '주 1회 6주 정기 모임 (온라인)',
       '1:1 코칭',
       '자기주도형 온라인 코스 (영상)',
     ],
