@@ -9,7 +9,6 @@ import {
   totalSections,
   SurveyQuestion,
 } from "@/data/surveyQuestions";
-import { participants } from "@/data/participants";
 import {
   ChevronRight,
   ChevronLeft,
@@ -17,7 +16,6 @@ import {
   Star,
   CheckCircle2,
   Sparkles,
-  UserX,
 } from "lucide-react";
 
 // ─── Star Rating Component ───
@@ -273,22 +271,14 @@ function QuestionRenderer({
 
 // ─── Main Survey Page ───
 export default function SurveyPage() {
-  const [currentSection, setCurrentSection] = useState(0); // 0 = name selection
-  const [selectedName, setSelectedName] = useState("");
+  const [currentSection, setCurrentSection] = useState(0); // 0 = intro
   const [answers, setAnswers] = useState<
     Record<string, string | string[] | number>
   >({});
   const [otherValues, setOtherValues] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
-  const [nameSearch, setNameSearch] = useState("");
-
-  const filteredParticipants = useMemo(() => {
-    if (!nameSearch) return participants.filter((p) => p.name !== "김수진 키키맘");
-    return participants
-      .filter((p) => p.name !== "김수진 키키맘")
-      .filter((p) => p.name.includes(nameSearch));
-  }, [nameSearch]);
+  const [consentChecked, setConsentChecked] = useState(false);
 
   const sectionQuestions = useMemo(
     () => (currentSection > 0 ? getSectionQuestions(currentSection) : []),
@@ -307,7 +297,7 @@ export default function SurveyPage() {
 
   // Validate current section
   const isSectionValid = () => {
-    if (currentSection === 0) return selectedName !== "";
+    if (currentSection === 0) return true; // intro always valid
 
     const questions = getSectionQuestions(currentSection);
     return questions.every((q) => {
@@ -349,7 +339,7 @@ export default function SurveyPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: selectedName,
+          name: "익명",
           cohort: 5,
           answers: finalAnswers,
         }),
@@ -368,7 +358,7 @@ export default function SurveyPage() {
   };
 
   const isLastSection = currentSection === totalSections;
-  const progress = (currentSection / (totalSections + 1)) * 100;
+  const progress = ((currentSection) / (totalSections + 1)) * 100;
 
   // ─── Completion Screen ───
   if (isComplete) {
@@ -407,7 +397,7 @@ export default function SurveyPage() {
             </h1>
 
             <p className="text-ink-light font-light text-lg leading-relaxed break-keep">
-              {selectedName === "익명" ? "소중한 의견이" : <>{selectedName}님의 소중한 의견이</>}<br />
+              소중한 의견이<br />
               잘 전달되었습니다 💛
             </p>
 
@@ -459,18 +449,17 @@ export default function SurveyPage() {
       <main className="relative z-10 min-h-screen flex flex-col justify-center px-4 py-24 md:py-32">
         <div className="w-full max-w-xl mx-auto">
           <AnimatePresence mode="wait">
-            {/* ─── Section 0: Name Selection ─── */}
+            {/* ─── Section 0: Intro ─── */}
             {currentSection === 0 && (
               <motion.div
-                key="name"
+                key="intro"
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="space-y-8"
               >
-                {/* Header */}
-                <div className="text-center space-y-6 mb-12">
+                <div className="text-center space-y-6">
                   <span className="text-4xl">✧</span>
                   <h1 className="text-2xl md:text-3xl font-serif text-astra-glow tracking-widest">
                     설문조사
@@ -482,62 +471,19 @@ export default function SurveyPage() {
                   <div className="w-12 h-[1px] bg-astra-gold/30 mx-auto" />
                 </div>
 
-                {/* Name Selection */}
-                <div className="space-y-4">
-                  <label className="block text-lg font-serif text-astra-starlight">
-                    이름을 선택하거나, 익명으로 참여할 수 있어요
-                  </label>
+                <div className="bg-white/[0.03] border border-white/10 rounded-2xl p-6 space-y-4 text-center">
+                  <p className="text-astra-starlight font-serif text-lg">🔒 100% 익명 설문</p>
+                  <p className="text-ink-light font-light text-[14px] leading-relaxed break-keep">
+                    이 설문은 완전히 익명으로 진행됩니다.<br />
+                    이름이나 개인정보는 일절 수집하지 않아요.<br />
+                    편하게 솔직하게 적어주세요.
+                  </p>
+                </div>
 
-                  {/* Anonymous Button */}
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedName("익명");
-                      setNameSearch("");
-                    }}
-                    className={`w-full flex items-center justify-center gap-3 px-5 py-4 rounded-2xl border transition-all duration-300 font-sans text-[15px] ${
-                      selectedName === "익명"
-                        ? "bg-astra-gold/15 border-astra-gold/50 text-astra-gold shadow-[0_0_15px_rgba(217,187,123,0.15)]"
-                        : "bg-white/[0.03] border-white/10 text-ink-light hover:border-white/20 hover:bg-white/[0.05]"
-                    }`}
-                  >
-                    <UserX size={18} className="opacity-70" />
-                    익명으로 참여하기
-                  </button>
-
-                  <div className="flex items-center gap-3 py-2">
-                    <div className="flex-1 h-[1px] bg-white/10" />
-                    <span className="text-[11px] text-ink-gray font-sans tracking-widest">또는 이름 선택</span>
-                    <div className="flex-1 h-[1px] bg-white/10" />
-                  </div>
-
-                  <input
-                    type="text"
-                    value={nameSearch}
-                    onChange={(e) => setNameSearch(e.target.value)}
-                    placeholder="이름 검색..."
-                    className="w-full px-5 py-3 rounded-xl bg-white/[0.03] border border-white/10 text-astra-starlight font-sans text-[15px] placeholder:text-ink-gray/40 focus:outline-none focus:border-astra-gold/50 transition-all"
-                  />
-
-                  <div className="grid grid-cols-3 md:grid-cols-4 gap-2 max-h-[30vh] overflow-y-auto pr-1">
-                    {filteredParticipants.map((p) => (
-                      <button
-                        key={p.name}
-                        type="button"
-                        onClick={() => {
-                          setSelectedName(p.name);
-                          setNameSearch("");
-                        }}
-                        className={`px-3 py-3 rounded-xl border text-[14px] font-sans transition-all duration-200 ${
-                          selectedName === p.name
-                            ? "bg-astra-gold/20 border-astra-gold/60 text-astra-gold shadow-[0_0_10px_rgba(217,187,123,0.15)]"
-                            : "bg-white/[0.02] border-white/10 text-ink-light hover:border-white/20"
-                        }`}
-                      >
-                        {p.name}
-                      </button>
-                    ))}
-                  </div>
+                <div className="text-center pt-4">
+                  <p className="text-ink-gray text-[13px] font-sans">
+                    약 3분 정도 소요됩니다
+                  </p>
                 </div>
               </motion.div>
             )}
@@ -583,6 +529,41 @@ export default function SurveyPage() {
                     />
                   ))}
                 </div>
+
+                {/* Consent Checkbox — only on last section */}
+                {currentSection === totalSections && (
+                  <div className="mt-10 pt-8 border-t border-white/5">
+                    <button
+                      type="button"
+                      onClick={() => setConsentChecked(!consentChecked)}
+                      className={`w-full text-left px-5 py-5 rounded-2xl border transition-all duration-300 ${
+                        consentChecked
+                          ? "bg-astra-gold/10 border-astra-gold/40"
+                          : "bg-white/[0.02] border-white/10 hover:border-white/20"
+                      }`}
+                    >
+                      <span className="flex items-start gap-3">
+                        <span
+                          className={`w-5 h-5 mt-0.5 rounded-md border-2 flex items-center justify-center transition-all flex-shrink-0 ${
+                            consentChecked
+                              ? "bg-astra-gold border-astra-gold"
+                              : "border-white/20"
+                          }`}
+                        >
+                          {consentChecked && (
+                            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                              <path d="M2.5 6L5 8.5L9.5 3.5" stroke="#090B10" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                        </span>
+                        <span className="text-[14px] font-sans leading-relaxed text-ink-light break-keep">
+                          남겨주신 설문은 소중하게 받겠습니다. 일부 내용은 인스타그램 콘텐츠에 활용될 수 있으며, 특정 개인이 드러나는 이야기는 사용하지 않습니다.
+                          <span className="block mt-1 text-astra-gold font-medium">동의합니다.</span>
+                        </span>
+                      </span>
+                    </button>
+                  </div>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
@@ -622,7 +603,7 @@ export default function SurveyPage() {
               <button
                 type="button"
                 onClick={handleSubmit}
-                disabled={!isSectionValid() || isSubmitting}
+                disabled={!isSectionValid() || !consentChecked || isSubmitting}
                 className="flex items-center gap-2 px-7 py-3 rounded-xl bg-astra-gold text-astra-navy font-bold text-sm tracking-widest hover:bg-astra-glow transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(217,187,123,0.2)] hover:shadow-[0_0_30px_rgba(217,187,123,0.4)]"
               >
                 {isSubmitting ? (
